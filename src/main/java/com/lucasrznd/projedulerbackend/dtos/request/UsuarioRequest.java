@@ -4,9 +4,11 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import lombok.With;
 
 import java.time.LocalDateTime;
 
+@With
 public record UsuarioRequest(
         @Schema(description = "Nome", example = "Lucas Rezende")
         @NotBlank(message = "Nome não pode estar em branco.")
