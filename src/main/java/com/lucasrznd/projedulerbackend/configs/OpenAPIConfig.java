@@ -1,4 +1,4 @@
-package com.lucasrznd.projedulerbackend.config;
+package com.lucasrznd.projedulerbackend.configs;
 
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Info;
