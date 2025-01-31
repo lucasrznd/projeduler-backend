@@ -1,9 +1,11 @@
 package com.lucasrznd.projedulerbackend.dtos.response;
 
+import java.time.LocalDateTime;
+
 public record UsuarioResponse(Long id,
                               String nome,
                               String email,
-                              String dataCriacao,
-                              String ultimoLogin,
+                              LocalDateTime dataCriacao,
+                              LocalDateTime ultimoLogin,
                               String perfil) {
 }

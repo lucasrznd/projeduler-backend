@@ -38,7 +38,6 @@ public class Usuario implements Serializable {
     @Column(nullable = false)
     private LocalDateTime dataCriacao;
 
-    @Column(nullable = false)
     private LocalDateTime ultimoLogin;
 
     @Column(nullable = false)
