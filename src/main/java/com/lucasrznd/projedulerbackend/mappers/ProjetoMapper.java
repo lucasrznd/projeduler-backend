@@ -18,6 +18,7 @@ public interface ProjetoMapper {
     ProjetoResponse toResponse(final Projeto projeto);
 
     @Mapping(target = "id", ignore = true)
+    @Mapping(target = "dataCriacao", ignore = true)
     @Mapping(target = "usuarioResponsavel.id", source = "usuarioResponsavelId")
     Projeto toModel(final ProjetoRequest projetoRequest);
 

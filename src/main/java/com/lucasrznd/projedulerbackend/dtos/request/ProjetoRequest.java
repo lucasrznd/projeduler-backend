@@ -3,9 +3,11 @@ package com.lucasrznd.projedulerbackend.dtos.request;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import lombok.With;
 
 import java.time.LocalDate;
 
+@With
 public record ProjetoRequest(
         @Schema(description = "Nome", example = "Projeto Trainee")
         @NotBlank(message = "Nome não pode estar em branco.")
@@ -27,10 +29,6 @@ public record ProjetoRequest(
         @Schema(description = "Id do Usuário Responsavél", example = "1")
         @NotNull(message = "Id do Usuário Responsavél não pode ser nulo.")
         Long usuarioResponsavelId,
-
-        @Schema(description = "Data de Criação", example = "2025/01/01")
-        @NotNull(message = "Data de Criação não pode ser nula.")
-        LocalDate dataCriacao,
 
         @Schema(description = "Prioridade", example = "[\"BAIXA\", \"MEDIA\", \"ALTA\"]")
         String prioridade) {

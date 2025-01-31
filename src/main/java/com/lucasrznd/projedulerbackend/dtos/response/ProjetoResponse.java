@@ -9,7 +9,7 @@ public record ProjetoResponse(Long id,
                               LocalDate dataInicio,
                               LocalDate dataFim,
                               String status,
-                              UsuarioResponse usuario,
+                              UsuarioResponse usuarioResponsavel,
                               LocalDateTime dataCriacao,
                               String prioridade) {
 }
