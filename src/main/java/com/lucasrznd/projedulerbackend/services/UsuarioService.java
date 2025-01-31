@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
@@ -20,7 +21,12 @@ public class UsuarioService {
     private final UsuarioMapper mapper;
 
     public UsuarioResponse create(final UsuarioRequest request) {
-        return mapper.toResponse(repository.save(mapper.toModel(request.withDataCriacao(LocalDateTime.now()))));
+        Usuario usuario = mapper.toModel(request);
+        if (Objects.isNull(usuario.getDataCriacao())) {
+            usuario.setDataCriacao(LocalDateTime.now());
+        }
+
+        return mapper.toResponse(repository.save(usuario));
     }
 
     public List<UsuarioResponse> findAll() {

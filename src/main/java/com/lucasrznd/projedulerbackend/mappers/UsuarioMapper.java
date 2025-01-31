@@ -17,6 +17,7 @@ public interface UsuarioMapper {
     UsuarioResponse toResponse(final Usuario usuario);
 
     @Mapping(target = "id", ignore = true)
+    @Mapping(target = "dataCriacao", ignore = true)
     Usuario toModel(final UsuarioRequest usuarioRequest);
 
     Usuario update(UsuarioRequest usuarioRequest, @MappingTarget Usuario usuario);
