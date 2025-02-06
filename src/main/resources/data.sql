@@ -1,14 +1,14 @@
 -- Inserindo Usuários (4 Admins, 6 Users)
-INSERT INTO tb_usuario (id, nome, email, senha, data_criacao, ultimo_login, perfil) VALUE (1, 'Carlos Silva', 'carlos.silva@email.com', 'senha123', NOW(), NOW(), 'ADMIN');
-INSERT INTO tb_usuario (id, nome, email, senha, data_criacao, ultimo_login, perfil) VALUE (2, 'Fernanda Souza', 'fernanda.souza@email.com', 'senha123', NOW(), NOW(), 'ADMIN');
-INSERT INTO tb_usuario (id, nome, email, senha, data_criacao, ultimo_login, perfil) VALUE (3, 'Rafael Costa', 'rafael.costa@email.com', 'senha123', NOW(), NOW(), 'ADMIN');
-INSERT INTO tb_usuario (id, nome, email, senha, data_criacao, ultimo_login, perfil) VALUE (4, 'Juliana Mendes', 'juliana.mendes@email.com', 'senha123', NOW(), NOW(), 'ADMIN');
-INSERT INTO tb_usuario (id, nome, email, senha, data_criacao, ultimo_login, perfil) VALUE (5, 'Lucas Rezende', 'lucas.rezende@email.com', 'senha123', NOW(), NOW(), 'USER');
-INSERT INTO tb_usuario (id, nome, email, senha, data_criacao, ultimo_login, perfil) VALUE (6, 'Mariana Oliveira', 'mariana.oliveira@email.com', 'senha123', NOW(), NOW(), 'USER');
-INSERT INTO tb_usuario (id, nome, email, senha, data_criacao, ultimo_login, perfil) VALUE (7, 'Thiago Almeida', 'thiago.almeida@email.com', 'senha123', NOW(), NOW(), 'USER');
-INSERT INTO tb_usuario (id, nome, email, senha, data_criacao, ultimo_login, perfil) VALUE (8, 'Patrícia Lima', 'patricia.lima@email.com', 'senha123', NOW(), NOW(), 'USER');
-INSERT INTO tb_usuario (id, nome, email, senha, data_criacao, ultimo_login, perfil) VALUE (9, 'Gabriel Santos', 'gabriel.santos@email.com', 'senha123', NOW(), NOW(), 'USER');
-INSERT INTO tb_usuario (id, nome, email, senha, data_criacao, ultimo_login, perfil) VALUE (10, 'Amanda Rocha', 'amanda.rocha@email.com', 'senha123', NOW(), NOW(), 'USER');
+INSERT INTO tb_usuario (id, nome, email, senha, data_criacao, ultimo_login, perfil) VALUE (1, 'Carlos Silva', 'carlos.silva@email.com', '$2a$10$gNvkDBhwwZsb6XYb9xeQ0e6xWlBj7Qn9rU2rhVeH9gpVEQE5h5hYm', NOW(), NOW(), 'ADMIN');
+INSERT INTO tb_usuario (id, nome, email, senha, data_criacao, ultimo_login, perfil) VALUE (2, 'Fernanda Souza', 'fernanda.souza@email.com', '$2a$10$gNvkDBhwwZsb6XYb9xeQ0e6xWlBj7Qn9rU2rhVeH9gpVEQE5h5hYm', NOW(), NOW(), 'ADMIN');
+INSERT INTO tb_usuario (id, nome, email, senha, data_criacao, ultimo_login, perfil) VALUE (3, 'Rafael Costa', 'rafael.costa@email.com', '$2a$10$gNvkDBhwwZsb6XYb9xeQ0e6xWlBj7Qn9rU2rhVeH9gpVEQE5h5hYm', NOW(), NOW(), 'ADMIN');
+INSERT INTO tb_usuario (id, nome, email, senha, data_criacao, ultimo_login, perfil) VALUE (4, 'Juliana Mendes', 'juliana.mendes@email.com', '$2a$10$gNvkDBhwwZsb6XYb9xeQ0e6xWlBj7Qn9rU2rhVeH9gpVEQE5h5hYm', NOW(), NOW(), 'ADMIN');
+INSERT INTO tb_usuario (id, nome, email, senha, data_criacao, ultimo_login, perfil) VALUE (5, 'Lucas Rezende', 'lucas.rezende@email.com', '$2a$10$gNvkDBhwwZsb6XYb9xeQ0e6xWlBj7Qn9rU2rhVeH9gpVEQE5h5hYm', NOW(), NOW(), 'USER');
+INSERT INTO tb_usuario (id, nome, email, senha, data_criacao, ultimo_login, perfil) VALUE (6, 'Mariana Oliveira', 'mariana.oliveira@email.com', '$2a$10$gNvkDBhwwZsb6XYb9xeQ0e6xWlBj7Qn9rU2rhVeH9gpVEQE5h5hYm', NOW(), NOW(), 'USER');
+INSERT INTO tb_usuario (id, nome, email, senha, data_criacao, ultimo_login, perfil) VALUE (7, 'Thiago Almeida', 'thiago.almeida@email.com', '$2a$10$gNvkDBhwwZsb6XYb9xeQ0e6xWlBj7Qn9rU2rhVeH9gpVEQE5h5hYm', NOW(), NOW(), 'USER');
+INSERT INTO tb_usuario (id, nome, email, senha, data_criacao, ultimo_login, perfil) VALUE (8, 'Patrícia Lima', 'patricia.lima@email.com', '$2a$10$gNvkDBhwwZsb6XYb9xeQ0e6xWlBj7Qn9rU2rhVeH9gpVEQE5h5hYm', NOW(), NOW(), 'USER');
+INSERT INTO tb_usuario (id, nome, email, senha, data_criacao, ultimo_login, perfil) VALUE (9, 'Gabriel Santos', 'gabriel.santos@email.com', '$2a$10$gNvkDBhwwZsb6XYb9xeQ0e6xWlBj7Qn9rU2rhVeH9gpVEQE5h5hYm', NOW(), NOW(), 'USER');
+INSERT INTO tb_usuario (id, nome, email, senha, data_criacao, ultimo_login, perfil) VALUE (10, 'Amanda Rocha', 'amanda.rocha@email.com', '$2a$10$gNvkDBhwwZsb6XYb9xeQ0e6xWlBj7Qn9rU2rhVeH9gpVEQE5h5hYm', NOW(), NOW(), 'USER');
 
 -- Inserindo Projetos
 INSERT INTO tb_projeto (id, nome, descricao, data_inicio, data_fim, status, usuario_responsavel_id, data_criacao,
