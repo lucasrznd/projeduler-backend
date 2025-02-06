@@ -1,11 +1,14 @@
 package com.lucasrznd.projedulerbackend.exceptions.handler;
 
+import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.lucasrznd.projedulerbackend.exceptions.ResourceNotFoundException;
 import com.lucasrznd.projedulerbackend.exceptions.StandardError;
 import com.lucasrznd.projedulerbackend.exceptions.ValidationException;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -56,4 +59,39 @@ public class ControllerExceptionHandler {
         );
     }
 
+    @ExceptionHandler({BadCredentialsException.class})
+    public ResponseEntity<StandardError> handleBadCredentialsException(final RuntimeException ex, final HttpServletRequest request) {
+        return ResponseEntity.status(UNAUTHORIZED).body(
+                StandardError.builder()
+                        .timestamp(LocalDateTime.now())
+                        .status(UNAUTHORIZED.value())
+                        .error(UNAUTHORIZED.getReasonPhrase())
+                        .message(ex.getMessage())
+                        .path(request.getRequestURI()).build()
+        );
+    }
+
+    @ExceptionHandler({UsernameNotFoundException.class})
+    public ResponseEntity<StandardError> handleUsernameNotFoundException(final UsernameNotFoundException ex, final HttpServletRequest request) {
+        return ResponseEntity.status(UNAUTHORIZED).body(
+                StandardError.builder()
+                        .timestamp(LocalDateTime.now())
+                        .status(UNAUTHORIZED.value())
+                        .error(UNAUTHORIZED.getReasonPhrase())
+                        .message(ex.getMessage())
+                        .path(request.getRequestURI()).build()
+        );
+    }
+
+    @ExceptionHandler({JWTVerificationException.class})
+    public ResponseEntity<StandardError> handleJWTVerificationException(final JWTVerificationException ex, final HttpServletRequest request) {
+        return ResponseEntity.status(UNAUTHORIZED).body(
+                StandardError.builder()
+                        .timestamp(LocalDateTime.now())
+                        .status(UNAUTHORIZED.value())
+                        .error(UNAUTHORIZED.getReasonPhrase())
+                        .message(ex.getMessage())
+                        .path(request.getRequestURI()).build()
+        );
+    }
 }
