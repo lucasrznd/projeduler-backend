@@ -43,10 +43,8 @@ public class JWTUtils {
                     .build()
                     .verify(token)
                     .getSubject();
-        } catch (TokenExpiredException exception) {
-            throw new JWTVerificationException("Token expirado, faça login novamente.");
         } catch (JWTVerificationException exception) {
-            throw new JWTVerificationException("Token inválido.");
+            return null;
         }
     }
 

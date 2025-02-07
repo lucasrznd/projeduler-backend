@@ -20,7 +20,7 @@ public class JWTAuthenticationImpl {
 
     private final AuthenticationManager authenticationManager;
     private final JWTUtils jwtUtils;
-    private UsuarioRepository repository;
+    private final UsuarioRepository repository;
 
     @Value("${api.security.access-token.expiration}")
     private Long accessTokenExpiration;
@@ -52,7 +52,7 @@ public class JWTAuthenticationImpl {
 
     public AuthenticationResponse refreshToken(String refreshToken) {
         String login = jwtUtils.validateToken(refreshToken);
-        Usuario usuario = repository.findByEmail(login).orElseThrow(() -> new UsernameNotFoundException("Usuário não encontrado: " + login));
+        Usuario usuario = repository.findByEmail(login).orElseThrow(() -> new UsernameNotFoundException("Usuário não encontrado."));
 
         var authentication = new UsernamePasswordAuthenticationToken(usuario, null, usuario.getAuthorities());
 
