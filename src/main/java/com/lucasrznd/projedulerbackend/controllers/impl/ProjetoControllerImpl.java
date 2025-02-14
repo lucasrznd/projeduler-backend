@@ -6,6 +6,7 @@ import com.lucasrznd.projedulerbackend.dtos.response.ProjetoResponse;
 import com.lucasrznd.projedulerbackend.services.ProjetoService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -24,8 +25,8 @@ public class ProjetoControllerImpl implements ProjetoController {
     }
 
     @Override
-    public ResponseEntity<List<ProjetoResponse>> findAll() {
-        return ResponseEntity.ok().body(service.findAll());
+    public ResponseEntity<List<ProjetoResponse>> findAll(UserDetails user) {
+        return ResponseEntity.ok().body(service.findAll(user));
     }
 
     @Override
