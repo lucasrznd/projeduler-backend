@@ -11,6 +11,7 @@ import com.lucasrznd.projedulerbackend.repositories.UsuarioProjetoRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -29,6 +30,7 @@ public class UsuarioProjetoService {
         UsuarioProjeto usuarioProjeto = mapper.toModel(request);
         usuarioProjeto.setUsuario(usuario);
         usuarioProjeto.setProjeto(projeto);
+        usuarioProjeto.setDataEntrada(LocalDate.now());
 
         return mapper.toResponse(repository.save(usuarioProjeto));
     }
