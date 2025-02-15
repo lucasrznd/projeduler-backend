@@ -39,6 +39,16 @@ public class UsuarioService {
         return repository.findAll().stream().map(mapper::toResponse).toList();
     }
 
+    public List<UsuarioResponse> findUsuariosDisponiveis(Long projetoId) {
+        List<Usuario> usuarios = repository.findAll();
+        List<Usuario> usuariosNoProjeto = repository.findByProjetoId(projetoId);
+
+        return usuarios.stream()
+                .filter(usuario -> usuariosNoProjeto.stream().noneMatch(up -> up.getId().equals(usuario.getId())))
+                .map(mapper::toResponse)
+                .toList();
+    }
+
     public UsuarioResponse update(final Long id, final UsuarioRequest request) {
         Usuario usuario = find(id);
         verifyIfEmailAlreadyExists(request.email(), id);
@@ -47,7 +57,7 @@ public class UsuarioService {
                 repository.save(
                         mapper.update(request, usuario)
                                 .withSenha(request.senha() != null ? encoder.encode(request.senha())
-                                : usuario.getSenha()))
+                                        : usuario.getSenha()))
         );
     }
 
