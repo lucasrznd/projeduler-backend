@@ -55,7 +55,7 @@ public class UsuarioService {
         repository.delete(find(id));
     }
 
-    private Usuario find(final Long id) {
+    public Usuario find(final Long id) {
         return repository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Usuário não encontrado. Id: " + id + ", Tipo: " + UsuarioResponse.class.getSimpleName()));
     }

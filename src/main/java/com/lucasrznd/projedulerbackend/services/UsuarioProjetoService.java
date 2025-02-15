@@ -4,6 +4,8 @@ import com.lucasrznd.projedulerbackend.dtos.request.UsuarioProjetoRequest;
 import com.lucasrznd.projedulerbackend.dtos.response.UsuarioProjetoResponse;
 import com.lucasrznd.projedulerbackend.exceptions.ResourceNotFoundException;
 import com.lucasrznd.projedulerbackend.mappers.UsuarioProjetoMapper;
+import com.lucasrznd.projedulerbackend.models.Projeto;
+import com.lucasrznd.projedulerbackend.models.Usuario;
 import com.lucasrznd.projedulerbackend.models.UsuarioProjeto;
 import com.lucasrznd.projedulerbackend.repositories.UsuarioProjetoRepository;
 import lombok.RequiredArgsConstructor;
@@ -17,9 +19,16 @@ public class UsuarioProjetoService {
 
     private final UsuarioProjetoRepository repository;
     private final UsuarioProjetoMapper mapper;
+    private final UsuarioService usuarioService;
+    private final ProjetoService projetoService;
 
     public UsuarioProjetoResponse save(final UsuarioProjetoRequest request) {
+        Usuario usuario = usuarioService.find(request.usuarioId());
+        Projeto projeto = projetoService.find(request.projetoId());
+
         UsuarioProjeto usuarioProjeto = mapper.toModel(request);
+        usuarioProjeto.setUsuario(usuario);
+        usuarioProjeto.setProjeto(projeto);
 
         return mapper.toResponse(repository.save(usuarioProjeto));
     }

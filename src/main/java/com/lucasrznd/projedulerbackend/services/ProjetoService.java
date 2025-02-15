@@ -63,7 +63,7 @@ public class ProjetoService {
         repository.delete(find(id));
     }
 
-    private Projeto find(final Long id) {
+    public Projeto find(final Long id) {
         return repository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Projeto não encontrado. Id: " + id + ", Tipo: " + ProjetoResponse.class.getSimpleName()));
     }

@@ -15,6 +15,5 @@ public record UsuarioProjetoRequest(
         Long projetoId,
 
         @Schema(description = "Data de Entrada", example = "2025/01/01")
-        @NotNull(message = "Data de Entrada não pode ser nula.")
         LocalDate dataEntrada) {
 }
