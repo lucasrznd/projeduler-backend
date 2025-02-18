@@ -45,8 +45,13 @@ public class UsuarioProjetoService {
         return mapper.toResponse(repository.save(mapper.update(request, usuarioProjeto)));
     }
 
-    public void delete(final Long id) {
-        repository.delete(find(id));
+    public void delete(final Long usuarioId, final Long projetoId) {
+        repository.delete(findByUsuarioIdAndProjetoId(usuarioId, projetoId));
+    }
+
+    private UsuarioProjeto findByUsuarioIdAndProjetoId(Long usuarioId, Long projetoId) {
+        return repository.findByUsuarioIdAndProjetoId(usuarioId, projetoId)
+                .orElseThrow(() -> new ResourceNotFoundException("Usuário de projeto não encontrado. Tipo: " + UsuarioProjetoResponse.class.getSimpleName()));
     }
 
     private UsuarioProjeto find(final Long id) {

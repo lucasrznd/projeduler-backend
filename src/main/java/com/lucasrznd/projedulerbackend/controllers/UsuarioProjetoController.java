@@ -58,8 +58,8 @@ public interface UsuarioProjetoController {
     })
     @PutMapping("/{id}")
     ResponseEntity<UsuarioProjetoResponse> update(@Parameter(description = "Usuario Projeto Id", required = true, example = "1")
-                                           @PathVariable(name = "id") Long id,
-                                           @RequestBody @Valid UsuarioProjetoRequest request);
+                                                  @PathVariable(name = "id") Long id,
+                                                  @RequestBody @Valid UsuarioProjetoRequest request);
 
     @Operation(summary = "Remover usuário do projeto")
     @ApiResponses(value = {
@@ -71,8 +71,10 @@ public interface UsuarioProjetoController {
             @ApiResponse(responseCode = "500", description = "Internal server error", content = @Content(
                     mediaType = APPLICATION_JSON_VALUE, array = @ArraySchema(schema = @Schema(implementation = StandardError.class))))
     })
-    @DeleteMapping("/{id}")
-    ResponseEntity<Void> delete(@Parameter(description = "Usuario Projeto Id", required = true, example = "1")
-                                @PathVariable(name = "id") Long id);
+    @DeleteMapping("/{usuarioId}/{projetoId}")
+    ResponseEntity<Void> delete(@Parameter(description = "Usuario Id", required = true, example = "1")
+                                @PathVariable(name = "usuarioId") Long usuarioId,
+                                @Parameter(description = "Projeto Id", required = true, example = "1")
+                                @PathVariable(name = "projetoId") Long projetoId);
 
 }

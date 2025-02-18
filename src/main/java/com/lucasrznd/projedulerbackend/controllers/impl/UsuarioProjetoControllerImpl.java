@@ -34,8 +34,8 @@ public class UsuarioProjetoControllerImpl implements UsuarioProjetoController {
     }
 
     @Override
-    public ResponseEntity<Void> delete(Long id) {
-        service.delete(id);
+    public ResponseEntity<Void> delete(Long usuarioId, Long projetoId) {
+        service.delete(usuarioId, projetoId);
 
         return ResponseEntity.noContent().build();
     }
