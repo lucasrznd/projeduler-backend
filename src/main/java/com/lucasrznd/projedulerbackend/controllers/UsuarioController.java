@@ -45,6 +45,17 @@ public interface UsuarioController {
     @GetMapping
     ResponseEntity<List<UsuarioResponse>> findAll();
 
+    @Operation(summary = "Buscar todos usuarios de um projeto")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Usuarios encontrados", content = @Content(
+                    mediaType = APPLICATION_JSON_VALUE, array = @ArraySchema(schema = @Schema(implementation = UsuarioResponse.class)))),
+            @ApiResponse(responseCode = "500", description = "Internal server error", content = @Content(
+                    mediaType = APPLICATION_JSON_VALUE, schema = @Schema(implementation = StandardError.class)))
+    })
+    @GetMapping("/projeto/{projetoId}")
+    ResponseEntity<List<UsuarioResponse>> findAllByProjetoId(@Parameter(description = "Projeto Id", required = true, example = "1")
+                                                             @PathVariable(name = "projetoId") Long projetoId);
+
     @Operation(summary = "Buscar todos usuarios disponiveis de um projeto")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Usuarios encontrados", content = @Content(
@@ -52,9 +63,9 @@ public interface UsuarioController {
             @ApiResponse(responseCode = "500", description = "Internal server error", content = @Content(
                     mediaType = APPLICATION_JSON_VALUE, schema = @Schema(implementation = StandardError.class)))
     })
-    @GetMapping("/disponiveis")
-    ResponseEntity<List<UsuarioResponse>> findUsuariosDisponiveis(@Parameter(description = "Projeto Id", required = true, example = "1")
-                                                                  @RequestParam(name = "projetoId") Long projetoId);
+    @GetMapping("/projeto/{projetoId}/disponiveis")
+    ResponseEntity<List<UsuarioResponse>> findUsuariosDisponiveisByProjetoId(@Parameter(description = "Projeto Id", required = true, example = "1")
+                                                                             @PathVariable(name = "projetoId") Long projetoId);
 
     @Operation(summary = "Atualizar usuario")
     @ApiResponses(value = {

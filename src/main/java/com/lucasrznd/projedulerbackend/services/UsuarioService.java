@@ -39,7 +39,11 @@ public class UsuarioService {
         return repository.findAll().stream().map(mapper::toResponse).toList();
     }
 
-    public List<UsuarioResponse> findUsuariosDisponiveis(Long projetoId) {
+    public List<UsuarioResponse> findAllByProjetoId(Long projetoId) {
+        return repository.findByProjetoId(projetoId).stream().map(mapper::toResponse).toList();
+    }
+
+    public List<UsuarioResponse> findUsuariosDisponiveisByProjetoId(Long projetoId) {
         List<Usuario> usuarios = repository.findAll();
         List<Usuario> usuariosNoProjeto = repository.findByProjetoId(projetoId);
 
