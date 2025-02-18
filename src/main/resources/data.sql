@@ -42,7 +42,16 @@ INSERT INTO tb_projeto (id, nome, descricao, data_inicio, data_fim, status, usua
                         prioridade) VALUE (14, 'Sistema de Controle de Estoque', 'Projeto para otimizar a gestão de estoque', '2024-05-01', '2024-09-10', 'CANCELADO', 6, '2024-04-01', 'BAIXA');
 INSERT INTO tb_projeto (id, nome, descricao, data_inicio, data_fim, status, usuario_responsavel_id, data_criacao,
                         prioridade) VALUE (15, 'Aplicativo de Agendamento', 'App para agendamento de serviços', '2024-06-15', '2024-11-20', 'CANCELADO', 7, '2024-05-05', 'BAIXA');
-
+INSERT INTO tb_projeto (id, nome, descricao, data_inicio, data_fim, status, usuario_responsavel_id, data_criacao,
+                        prioridade) VALUE (16, 'Sistema de Atendimento ao Cliente', 'Plataforma para gerenciar tickets de suporte', '2024-01-15', '2024-06-30', 'CONCLUIDO', 2, '2024-01-05', 'ALTA');
+INSERT INTO tb_projeto (id, nome, descricao, data_inicio, data_fim, status, usuario_responsavel_id, data_criacao,
+                        prioridade) VALUE (17, 'Automação de Processos', 'Ferramenta para automação de workflows empresariais', '2024-02-20', '2024-07-25', 'CONCLUIDO', 3, '2024-02-10', 'MEDIA');
+INSERT INTO tb_projeto (id, nome, descricao, data_inicio, data_fim, status, usuario_responsavel_id, data_criacao,
+                        prioridade) VALUE (18, 'Aplicativo de Delivery', 'Plataforma para gerenciamento de pedidos', '2024-05-01', NULL, 'EM ANDAMENTO', 4, '2024-04-20', 'ALTA');
+INSERT INTO tb_projeto (id, nome, descricao, data_inicio, data_fim, status, usuario_responsavel_id, data_criacao,
+                        prioridade) VALUE (19, 'Sistema de Monitoramento', 'Projeto de monitoramento de servidores', '2024-06-15', NULL, 'EM ANDAMENTO', 5, '2024-05-30', 'MEDIA');
+INSERT INTO tb_projeto (id, nome, descricao, data_inicio, data_fim, status, usuario_responsavel_id, data_criacao,
+                        prioridade) VALUE (20, 'Plataforma de Educação Online', 'Sistema de ensino à distância', '2024-07-10', NULL, 'EM ANDAMENTO', 6, '2024-06-25', 'ALTA');
 
 -- Inserindo Atividades
 INSERT INTO tb_atividade (id, projeto_id, nome, descricao, data_inicio, data_fim, status, usuario_responsavel_id,
@@ -75,6 +84,26 @@ INSERT INTO tb_atividade (id, projeto_id, nome, descricao, data_inicio, data_fim
                           data_criacao) VALUE (14, 12, 'Configuração do Gateway de Pagamento', 'Integração com sistemas de pagamento', '2024-04-01', '2024-08-10', 'CONCLUIDA', 6, '2024-03-05');
 INSERT INTO tb_atividade (id, projeto_id, nome, descricao, data_inicio, data_fim, status, usuario_responsavel_id,
                           data_criacao) VALUE (15, 13, 'Criação de Relatórios de Indicadores', 'Desenvolvimento de gráficos e relatórios', '2024-05-01', '2024-10-20', 'CONCLUIDA', 7, '2024-04-10');
+INSERT INTO tb_atividade (id, projeto_id, nome, descricao, data_inicio, data_fim, status, usuario_responsavel_id,
+                          data_criacao) VALUE (16, 16, 'Desenvolvimento do Chatbot de Suporte', 'Criação de um chatbot para atendimento automático', '2024-02-01', '2024-04-15', 'CONCLUIDA', 7, '2024-01-25');
+INSERT INTO tb_atividade (id, projeto_id, nome, descricao, data_inicio, data_fim, status, usuario_responsavel_id,
+                          data_criacao) VALUE (17, 16, 'Integração com CRM', 'Conexão com sistemas de CRM', '2024-03-10', '2024-05-20', 'CONCLUIDA', 8, '2024-02-15');
+INSERT INTO tb_atividade (id, projeto_id, nome, descricao, data_inicio, data_fim, status, usuario_responsavel_id,
+                          data_criacao) VALUE (18, 17, 'Criação de Fluxos de Automação', 'Definição e implementação dos workflows', '2024-02-25', '2024-06-10', 'CONCLUIDA', 9, '2024-02-18');
+INSERT INTO tb_atividade (id, projeto_id, nome, descricao, data_inicio, data_fim, status, usuario_responsavel_id,
+                          data_criacao) VALUE (19, 17, 'Testes de Automação', 'Validação dos fluxos automatizados', '2024-04-01', '2024-07-20', 'CONCLUIDA', 10, '2024-03-10');
+INSERT INTO tb_atividade (id, projeto_id, nome, descricao, data_inicio, data_fim, status, usuario_responsavel_id,
+                          data_criacao) VALUE (20, 18, 'Desenvolvimento do App Mobile', 'Criação do aplicativo para Android e iOS', '2024-05-05', NULL, 'EM ANDAMENTO', 6, '2024-04-30');
+INSERT INTO tb_atividade (id, projeto_id, nome, descricao, data_inicio, data_fim, status, usuario_responsavel_id,
+                          data_criacao) VALUE (21, 18, 'Implementação do Sistema de Pagamentos', 'Integração com gateways de pagamento', '2024-05-20', NULL, 'EM ANDAMENTO', 7, '2024-05-10');
+INSERT INTO tb_atividade (id, projeto_id, nome, descricao, data_inicio, data_fim, status, usuario_responsavel_id,
+                          data_criacao) VALUE (22, 19, 'Configuração do Monitoramento de Servidores', 'Setup de ferramentas de monitoramento', '2024-06-20', NULL, 'EM ANDAMENTO', 8, '2024-06-15');
+INSERT INTO tb_atividade (id, projeto_id, nome, descricao, data_inicio, data_fim, status, usuario_responsavel_id,
+                          data_criacao) VALUE (23, 19, 'Criação de Alertas Automáticos', 'Configuração de notificações automáticas', '2024-07-01', NULL, 'EM ANDAMENTO', 9, '2024-06-28');
+INSERT INTO tb_atividade (id, projeto_id, nome, descricao, data_inicio, data_fim, status, usuario_responsavel_id,
+                          data_criacao) VALUE (24, 20, 'Desenvolvimento da Plataforma Web', 'Implementação do portal educacional', '2024-07-15', NULL, 'EM ANDAMENTO', 10, '2024-07-05');
+INSERT INTO tb_atividade (id, projeto_id, nome, descricao, data_inicio, data_fim, status, usuario_responsavel_id,
+                          data_criacao) VALUE (25, 20, 'Criação de Conteúdo Interativo', 'Produção de vídeos e quizzes', '2024-07-20', NULL, 'EM ANDAMENTO', 2, '2024-07-10');
 
 -- Inserindo Lançamentos de Horas
 INSERT INTO tb_lancamento_hora (id, atividade_id, usuario_id, descricao, data_inicio, data_fim,
@@ -129,3 +158,13 @@ INSERT INTO tb_usuario_projeto (id, usuario_id, projeto_id, data_entrada) VALUE 
 INSERT INTO tb_usuario_projeto (id, usuario_id, projeto_id, data_entrada) VALUE (18, 10, 12, '2024-03-01');
 INSERT INTO tb_usuario_projeto (id, usuario_id, projeto_id, data_entrada) VALUE (19, 6, 12, '2024-03-01');
 INSERT INTO tb_usuario_projeto (id, usuario_id, projeto_id, data_entrada) VALUE (20, 7, 13, '2024-04-10');
+INSERT INTO tb_usuario_projeto (id, usuario_id, projeto_id, data_entrada) VALUE (21, 7, 16, '2024-01-15');
+INSERT INTO tb_usuario_projeto (id, usuario_id, projeto_id, data_entrada) VALUE (22, 8, 16, '2024-01-15');
+INSERT INTO tb_usuario_projeto (id, usuario_id, projeto_id, data_entrada) VALUE (23, 9, 17, '2024-02-20');
+INSERT INTO tb_usuario_projeto (id, usuario_id, projeto_id, data_entrada) VALUE (24, 10, 17, '2024-02-20');
+INSERT INTO tb_usuario_projeto (id, usuario_id, projeto_id, data_entrada) VALUE (25, 6, 18, '2024-05-01');
+INSERT INTO tb_usuario_projeto (id, usuario_id, projeto_id, data_entrada) VALUE (26, 7, 18, '2024-05-01');
+INSERT INTO tb_usuario_projeto (id, usuario_id, projeto_id, data_entrada) VALUE (27, 8, 19, '2024-06-15');
+INSERT INTO tb_usuario_projeto (id, usuario_id, projeto_id, data_entrada) VALUE (28, 9, 19, '2024-06-15');
+INSERT INTO tb_usuario_projeto (id, usuario_id, projeto_id, data_entrada) VALUE (29, 10, 20, '2024-07-10');
+INSERT INTO tb_usuario_projeto (id, usuario_id, projeto_id, data_entrada) VALUE (30, 2, 20, '2024-07-10');
