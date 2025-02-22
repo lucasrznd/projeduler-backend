@@ -13,6 +13,8 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -33,7 +35,8 @@ public interface LancamentoHoraController {
                     mediaType = APPLICATION_JSON_VALUE, schema = @Schema(implementation = StandardError.class)))
     })
     @PostMapping
-    ResponseEntity<LancamentoHoraResponse> create(@RequestBody @Valid final LancamentoHoraRequest request);
+    ResponseEntity<LancamentoHoraResponse> create(@RequestBody @Valid final LancamentoHoraRequest request,
+                                                  @AuthenticationPrincipal UserDetails user);
 
     @Operation(summary = "Buscar todos lançamentos")
     @ApiResponses(value = {

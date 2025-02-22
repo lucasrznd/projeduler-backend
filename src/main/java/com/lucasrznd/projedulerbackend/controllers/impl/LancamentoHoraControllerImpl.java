@@ -6,6 +6,7 @@ import com.lucasrznd.projedulerbackend.dtos.response.LancamentoHoraResponse;
 import com.lucasrznd.projedulerbackend.services.LancamentoHoraService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -19,8 +20,8 @@ public class LancamentoHoraControllerImpl implements LancamentoHoraController {
     private final LancamentoHoraService service;
 
     @Override
-    public ResponseEntity<LancamentoHoraResponse> create(LancamentoHoraRequest request) {
-        return ResponseEntity.status(CREATED).body(service.save(request));
+    public ResponseEntity<LancamentoHoraResponse> create(LancamentoHoraRequest request, UserDetails user) {
+        return ResponseEntity.status(CREATED).body(service.save(request, user));
     }
 
     @Override

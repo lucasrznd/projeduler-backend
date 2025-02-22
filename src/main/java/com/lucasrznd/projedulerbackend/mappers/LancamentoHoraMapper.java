@@ -21,11 +21,9 @@ public interface LancamentoHoraMapper {
 
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "atividade.id", source = "atividadeId")
-    @Mapping(target = "usuario.id", source = "usuarioId")
     LancamentoHora toModel(final LancamentoHoraRequest lancamentoHoraRequest);
 
     @Mapping(target = "atividade", source = "atividadeId", qualifiedByName = "mapAtividade")
-    @Mapping(target = "usuario", source = "usuarioId", qualifiedByName = "mapUsuarioResponsavel")
     LancamentoHora update(final LancamentoHoraRequest request, @MappingTarget LancamentoHora lancamentoHora);
 
     @Named("mapAtividade")

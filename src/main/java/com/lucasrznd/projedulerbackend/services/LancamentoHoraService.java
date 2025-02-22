@@ -5,8 +5,12 @@ import com.lucasrznd.projedulerbackend.dtos.response.LancamentoHoraResponse;
 import com.lucasrznd.projedulerbackend.exceptions.ResourceNotFoundException;
 import com.lucasrznd.projedulerbackend.mappers.LancamentoHoraMapper;
 import com.lucasrznd.projedulerbackend.models.LancamentoHora;
+import com.lucasrznd.projedulerbackend.models.Usuario;
 import com.lucasrznd.projedulerbackend.repositories.LancamentoHoraRepository;
+import com.lucasrznd.projedulerbackend.repositories.UsuarioRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -18,9 +22,14 @@ public class LancamentoHoraService {
 
     private final LancamentoHoraRepository repository;
     private final LancamentoHoraMapper mapper;
+    private final UsuarioRepository usuarioRepository;
 
-    public LancamentoHoraResponse save(final LancamentoHoraRequest request) {
+    public LancamentoHoraResponse save(final LancamentoHoraRequest request, UserDetails user) {
+        Usuario usuario = usuarioRepository.findByEmail(user.getUsername())
+                .orElseThrow(() -> new UsernameNotFoundException("Usuário não encontrado."));
+
         LancamentoHora lancamentoHora = mapper.toModel(request);
+        lancamentoHora.setUsuario(usuario);
         lancamentoHora.setDataRegistro(LocalDateTime.now());
 
         return mapper.toResponse(repository.save(lancamentoHora));
