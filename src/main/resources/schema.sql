@@ -60,7 +60,7 @@ CREATE TABLE tb_lancamento_hora
     usuario_id    BIGINT   NOT NULL,
     FOREIGN KEY (usuario_id) REFERENCES tb_usuario (id),
     descricao     TEXT,
-    data_inicio   DATE,
-    data_fim      DATE,
+    data_inicio   DATETIME,
+    data_fim      DATETIME,
     data_registro DATETIME NOT NULL
 );
