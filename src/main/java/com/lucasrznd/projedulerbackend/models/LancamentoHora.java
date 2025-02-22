@@ -14,7 +14,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.io.Serializable;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Getter
@@ -41,10 +40,10 @@ public class LancamentoHora implements Serializable {
     private String descricao;
 
     @Column(nullable = false)
-    private LocalDate dataInicio;
+    private LocalDateTime dataInicio;
 
     @Column(nullable = false)
-    private LocalDate dataFim;
+    private LocalDateTime dataFim;
 
     @Column(nullable = false)
     private LocalDateTime dataRegistro;
