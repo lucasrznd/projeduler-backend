@@ -7,10 +7,8 @@ import com.lucasrznd.projedulerbackend.mappers.LancamentoHoraMapper;
 import com.lucasrznd.projedulerbackend.models.LancamentoHora;
 import com.lucasrznd.projedulerbackend.models.Usuario;
 import com.lucasrznd.projedulerbackend.repositories.LancamentoHoraRepository;
-import com.lucasrznd.projedulerbackend.repositories.UsuarioRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -22,11 +20,10 @@ public class LancamentoHoraService {
 
     private final LancamentoHoraRepository repository;
     private final LancamentoHoraMapper mapper;
-    private final UsuarioRepository usuarioRepository;
+    private final UsuarioService usuarioService;
 
     public LancamentoHoraResponse save(final LancamentoHoraRequest request, UserDetails user) {
-        Usuario usuario = usuarioRepository.findByEmail(user.getUsername())
-                .orElseThrow(() -> new UsernameNotFoundException("Usuário não encontrado."));
+        Usuario usuario = usuarioService.findByEmail(user.getUsername());
 
         LancamentoHora lancamentoHora = mapper.toModel(request);
         lancamentoHora.setUsuario(usuario);
@@ -35,8 +32,14 @@ public class LancamentoHoraService {
         return mapper.toResponse(repository.save(lancamentoHora));
     }
 
-    public List<LancamentoHoraResponse> findAll() {
-        return repository.findAll().stream().map(mapper::toResponse).toList();
+    public List<LancamentoHoraResponse> findAll(UserDetails user) {
+        Usuario usuario = usuarioService.findByEmail(user.getUsername());
+
+        if (usuario.getPerfil().equals("ADMIN")) {
+            return repository.findAllLancamentos().stream().map(mapper::toResponse).toList();
+        }
+
+        return repository.findByUsuarioId(usuario.getId()).stream().map(mapper::toResponse).toList();
     }
 
     public LancamentoHoraResponse update(Long id, LancamentoHoraRequest request) {

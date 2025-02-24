@@ -6,6 +6,7 @@ import com.lucasrznd.projedulerbackend.dtos.response.AtividadeResponse;
 import com.lucasrznd.projedulerbackend.services.AtividadeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -24,8 +25,8 @@ public class AtividadeControllerImpl implements AtividadeController {
     }
 
     @Override
-    public ResponseEntity<List<AtividadeResponse>> findAll() {
-        return ResponseEntity.ok(service.findAll());
+    public ResponseEntity<List<AtividadeResponse>> findAll(UserDetails user) {
+        return ResponseEntity.ok(service.findAll(user));
     }
 
     @Override

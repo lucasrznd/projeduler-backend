@@ -5,8 +5,10 @@ import com.lucasrznd.projedulerbackend.dtos.response.AtividadeResponse;
 import com.lucasrznd.projedulerbackend.exceptions.ResourceNotFoundException;
 import com.lucasrznd.projedulerbackend.mappers.AtividadeMapper;
 import com.lucasrznd.projedulerbackend.models.Atividade;
+import com.lucasrznd.projedulerbackend.models.Usuario;
 import com.lucasrznd.projedulerbackend.repositories.AtividadeRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -18,6 +20,7 @@ public class AtividadeService {
 
     private final AtividadeRepository repository;
     private final AtividadeMapper mapper;
+    private final UsuarioService usuarioService;
 
     public AtividadeResponse save(final AtividadeRequest request) {
         Atividade atividade = mapper.toModel(request);
@@ -26,8 +29,14 @@ public class AtividadeService {
         return mapper.toResponse(repository.save(atividade));
     }
 
-    public List<AtividadeResponse> findAll() {
-        return repository.findAll().stream().map(mapper::toResponse).toList();
+    public List<AtividadeResponse> findAll(UserDetails user) {
+        Usuario usuario = usuarioService.findByEmail(user.getUsername());
+
+        if (usuario.getPerfil().equals("ADMIN")) {
+            return repository.findAllAtividades().stream().map(mapper::toResponse).toList();
+        }
+
+        return repository.findByUsuarioResponsavelId(usuario.getId()).stream().map(mapper::toResponse).toList();
     }
 
     public AtividadeResponse update(Long id, AtividadeRequest request) {

@@ -25,8 +25,8 @@ public class LancamentoHoraControllerImpl implements LancamentoHoraController {
     }
 
     @Override
-    public ResponseEntity<List<LancamentoHoraResponse>> findAll() {
-        return ResponseEntity.ok().body(service.findAll());
+    public ResponseEntity<List<LancamentoHoraResponse>> findAll(UserDetails user) {
+        return ResponseEntity.ok().body(service.findAll(user));
     }
 
     @Override

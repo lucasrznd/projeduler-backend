@@ -46,7 +46,7 @@ public interface LancamentoHoraController {
                     mediaType = APPLICATION_JSON_VALUE, schema = @Schema(implementation = StandardError.class)))
     })
     @GetMapping
-    ResponseEntity<List<LancamentoHoraResponse>> findAll();
+    ResponseEntity<List<LancamentoHoraResponse>> findAll(@AuthenticationPrincipal UserDetails user);
 
     @Operation(summary = "Atualizar lançamento")
     @ApiResponses(value = {

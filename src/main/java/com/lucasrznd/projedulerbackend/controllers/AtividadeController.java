@@ -13,6 +13,8 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -43,7 +45,7 @@ public interface AtividadeController {
                     mediaType = APPLICATION_JSON_VALUE, schema = @Schema(implementation = StandardError.class)))
     })
     @GetMapping
-    ResponseEntity<List<AtividadeResponse>> findAll();
+    ResponseEntity<List<AtividadeResponse>> findAll(@AuthenticationPrincipal UserDetails user);
 
     @Operation(summary = "Atualizar atividade")
     @ApiResponses(value = {
