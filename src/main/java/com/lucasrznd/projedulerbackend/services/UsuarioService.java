@@ -8,6 +8,7 @@ import com.lucasrznd.projedulerbackend.models.Usuario;
 import com.lucasrznd.projedulerbackend.repositories.UsuarioRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -51,6 +52,11 @@ public class UsuarioService {
                 .filter(usuario -> usuariosNoProjeto.stream().noneMatch(up -> up.getId().equals(usuario.getId())))
                 .map(mapper::toResponse)
                 .toList();
+    }
+
+    public Usuario findByEmail(String email) {
+        return repository.findByEmail(email)
+                .orElseThrow(() -> new UsernameNotFoundException("Usuário não encontrado."));
     }
 
     public UsuarioResponse update(final Long id, final UsuarioRequest request) {

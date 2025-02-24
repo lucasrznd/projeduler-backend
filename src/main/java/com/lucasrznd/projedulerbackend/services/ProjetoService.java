@@ -7,7 +7,6 @@ import com.lucasrznd.projedulerbackend.mappers.ProjetoMapper;
 import com.lucasrznd.projedulerbackend.models.Projeto;
 import com.lucasrznd.projedulerbackend.models.Usuario;
 import com.lucasrznd.projedulerbackend.repositories.ProjetoRepository;
-import com.lucasrznd.projedulerbackend.repositories.UsuarioRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -22,7 +21,7 @@ public class ProjetoService {
 
     private final ProjetoRepository repository;
     private final ProjetoMapper mapper;
-    private final UsuarioRepository usuarioRepository;
+    private final UsuarioService usuarioService;
 
     public ProjetoResponse save(final ProjetoRequest request) {
         Projeto projeto = mapper.toModel(request);
@@ -43,11 +42,10 @@ public class ProjetoService {
      * @throws UsernameNotFoundException Se o usuário autenticado não for encontrado no banco de dados.
      */
     public List<ProjetoResponse> findAll(UserDetails user) {
-        Usuario usuario = usuarioRepository.findByEmail(user.getUsername())
-                .orElseThrow(() -> new UsernameNotFoundException("Usuário não encontrado."));
+        Usuario usuario = usuarioService.findByEmail(user.getUsername());
 
         if (usuario.getPerfil().equals("ADMIN")) {
-            return repository.findAll().stream().map(mapper::toResponse).toList();
+            return repository.findAllProjetos().stream().map(mapper::toResponse).toList();
         }
 
         return repository.findByUsuarioId(usuario.getId()).stream().map(mapper::toResponse).toList();
