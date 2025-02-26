@@ -39,6 +39,11 @@ public class UsuarioControllerImpl implements UsuarioController {
     }
 
     @Override
+    public ResponseEntity<List<UsuarioResponse>> findAllByAtividadeId(Long atividadeId) {
+        return ResponseEntity.ok().body(service.findAllByAtividadeId(atividadeId));
+    }
+
+    @Override
     public ResponseEntity<UsuarioResponse> update(Long id, UsuarioRequest request) {
         return ResponseEntity.ok().body(service.update(id, request));
     }
