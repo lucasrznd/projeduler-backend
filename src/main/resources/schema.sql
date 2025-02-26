@@ -1,5 +1,6 @@
 DROP TABLE IF EXISTS tb_lancamento_hora;
 DROP TABLE IF EXISTS tb_usuario_projeto;
+DROP TABLE IF EXISTS tb_usuario_atividade;
 DROP TABLE IF EXISTS tb_atividade;
 DROP TABLE IF EXISTS tb_projeto;
 DROP TABLE IF EXISTS tb_usuario;
@@ -31,25 +32,34 @@ CREATE TABLE tb_projeto
 CREATE TABLE tb_usuario_projeto
 (
     id           BIGINT PRIMARY KEY AUTO_INCREMENT NOT NULL,
-    usuario_id   BIGINT NOT NULL,
+    usuario_id   BIGINT   NOT NULL,
     FOREIGN KEY (usuario_id) REFERENCES tb_usuario (id),
-    projeto_id   BIGINT NOT NULL,
+    projeto_id   BIGINT   NOT NULL,
     FOREIGN KEY (projeto_id) REFERENCES tb_projeto (id),
-    data_entrada DATE   NOT NULL
+    data_entrada DATETIME NOT NULL
 );
 
 CREATE TABLE tb_atividade
 (
-    id                     BIGINT PRIMARY KEY AUTO_INCREMENT NOT NULL,
-    projeto_id             BIGINT       NOT NULL,
+    id           BIGINT PRIMARY KEY AUTO_INCREMENT NOT NULL,
+    projeto_id   BIGINT       NOT NULL,
     FOREIGN KEY (projeto_id) REFERENCES tb_projeto (id),
-    nome                   VARCHAR(100) NOT NULL,
-    descricao              TEXT,
-    data_inicio            DATE,
-    data_fim               DATE,
-    status                 VARCHAR(50),
-    usuario_responsavel_id BIGINT       NOT NULL,
-    data_criacao           DATETIME     NOT NULL
+    nome         VARCHAR(100) NOT NULL,
+    descricao    TEXT,
+    data_inicio  DATE,
+    data_fim     DATE,
+    status       VARCHAR(50),
+    data_criacao DATETIME     NOT NULL
+);
+
+CREATE TABLE tb_usuario_atividade
+(
+    id           BIGINT PRIMARY KEY AUTO_INCREMENT NOT NULL,
+    usuario_id   BIGINT   NOT NULL,
+    FOREIGN KEY (usuario_id) REFERENCES tb_usuario (id),
+    atividade_id BIGINT   NOT NULL,
+    FOREIGN KEY (atividade_id) REFERENCES tb_atividade (id),
+    data_entrada DATETIME NOT NULL
 );
 
 CREATE TABLE tb_lancamento_hora
