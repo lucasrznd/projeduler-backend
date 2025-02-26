@@ -49,7 +49,7 @@ public class AtividadeService {
         repository.delete(find(id));
     }
 
-    private Atividade find(final Long id) {
+    public Atividade find(final Long id) {
         return repository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Atividade não encontrada. Id: " + id + ", Tipo: " + AtividadeResponse.class.getSimpleName()));
     }
