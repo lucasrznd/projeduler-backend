@@ -54,6 +54,10 @@ public class UsuarioService {
                 .toList();
     }
 
+    public List<UsuarioResponse> findAllByAtividadeId(Long atividadeId) {
+        return repository.findAllByAtividadeId(atividadeId).stream().map(mapper::toResponse).toList();
+    }
+
     public Usuario findByEmail(String email) {
         return repository.findByEmail(email)
                 .orElseThrow(() -> new UsernameNotFoundException("Usuário não encontrado."));
