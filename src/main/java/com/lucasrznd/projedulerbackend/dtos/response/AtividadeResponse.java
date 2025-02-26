@@ -10,6 +10,5 @@ public record AtividadeResponse(Long id,
                                 LocalDate dataInicio,
                                 LocalDate dataFim,
                                 String status,
-                                UsuarioResponse usuarioResponsavel,
                                 LocalDateTime dataCriacao) {
 }

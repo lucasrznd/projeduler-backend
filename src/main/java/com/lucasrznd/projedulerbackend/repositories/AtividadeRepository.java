@@ -13,6 +13,7 @@ public interface AtividadeRepository extends JpaRepository<Atividade, Long> {
     @Query("SELECT a FROM Atividade a ORDER BY a.dataCriacao DESC")
     List<Atividade> findAllAtividades();
 
-    List<Atividade> findByUsuarioResponsavelId(Long id);
+    @Query("SELECT a FROM Atividade a INNER JOIN UsuarioAtividade ua ON a.id =  ua.atividade.id WHERE ua.usuario.id = :usuarioId ORDER BY ua.dataEntrada")
+    List<Atividade> findByUsuarioResponsavelId(Long usuarioId);
 
 }

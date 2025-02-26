@@ -26,9 +26,5 @@ public record AtividadeRequest(
 
         @Schema(description = "Status", example = "[\"PLANEJADA\", \"ANDAMENTO\", \"CONCLUIDA\", \"PAUSADA\"]")
         @NotBlank(message = "Status não pode estar em branco.")
-        String status,
-
-        @Schema(description = "Id do Usuário Responsavél", example = "1")
-        @NotNull(message = "Id do Usuário Responsavél não pode ser nulo.")
-        Long usuarioResponsavelId) {
+        String status) {
 }

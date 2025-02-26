@@ -13,8 +13,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.io.Serializable;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Getter
@@ -22,8 +20,8 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "tb_atividade")
-public class Atividade implements Serializable {
+@Table(name = "tb_usuario_atividade")
+public class UsuarioAtividade {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,21 +29,13 @@ public class Atividade implements Serializable {
 
     @ManyToOne
     @JoinColumn(nullable = false)
-    private Projeto projeto;
+    private Usuario usuario;
+
+    @ManyToOne
+    @JoinColumn(nullable = false)
+    private Atividade atividade;
 
     @Column(nullable = false)
-    private String nome;
-
-    @Column(columnDefinition = "TEXT")
-    private String descricao;
-
-    private LocalDate dataInicio;
-
-    private LocalDate dataFim;
-
-    private String status;
-
-    @Column(nullable = false)
-    private LocalDateTime dataCriacao;
+    private LocalDateTime dataEntrada;
 
 }
