@@ -48,6 +48,16 @@ public interface LancamentoHoraController {
     @GetMapping
     ResponseEntity<List<LancamentoHoraResponse>> findAll(@AuthenticationPrincipal UserDetails user);
 
+    @Operation(summary = "Buscar os 5 últimos lançamentos")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Lançamentos encontrados", content = @Content(
+                    mediaType = APPLICATION_JSON_VALUE, array = @ArraySchema(schema = @Schema(implementation = LancamentoHoraResponse.class)))),
+            @ApiResponse(responseCode = "500", description = "Internal server error", content = @Content(
+                    mediaType = APPLICATION_JSON_VALUE, schema = @Schema(implementation = StandardError.class)))
+    })
+    @GetMapping("/ultimos-cinco")
+    ResponseEntity<List<LancamentoHoraResponse>> findUltimosCinco(@AuthenticationPrincipal UserDetails user);
+
     @Operation(summary = "Atualizar lançamento")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Lançamento atualizado", content = @Content(

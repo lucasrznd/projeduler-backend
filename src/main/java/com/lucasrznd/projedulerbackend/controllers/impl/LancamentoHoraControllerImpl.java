@@ -30,6 +30,11 @@ public class LancamentoHoraControllerImpl implements LancamentoHoraController {
     }
 
     @Override
+    public ResponseEntity<List<LancamentoHoraResponse>> findUltimosCinco(UserDetails user) {
+        return ResponseEntity.ok().body(service.findUltimosCinco(user));
+    }
+
+    @Override
     public ResponseEntity<LancamentoHoraResponse> update(Long id, LancamentoHoraRequest request) {
         return ResponseEntity.ok().body(service.update(id, request));
     }
