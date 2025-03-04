@@ -39,6 +39,36 @@ public class AtividadeService {
         return repository.findByUsuarioResponsavelId(usuario.getId()).stream().map(mapper::toResponse).toList();
     }
 
+    public Long countAllByStatus(String status, UserDetails user) {
+        Usuario usuario = usuarioService.findByEmail(user.getUsername());
+
+        if (usuario.getPerfil().equals("ADMIN")) {
+            return repository.countAllByStatus(status);
+        }
+
+        return repository.countAllByStatusAndUsuarioId(status, usuario.getId());
+    }
+
+    public Long countAllPendentes(UserDetails user) {
+        Usuario usuario = usuarioService.findByEmail(user.getUsername());
+
+        if (usuario.getPerfil().equals("ADMIN")) {
+            return repository.countAllByStatus("ABERTA");
+        }
+
+        return repository.countAllByStatusAndUsuarioId("ABERTA", usuario.getId());
+    }
+
+    public Long countAllAtrasdas(UserDetails user) {
+        Usuario usuario = usuarioService.findByEmail(user.getUsername());
+
+        if (usuario.getPerfil().equals("ADMIN")) {
+            return repository.countAllAtrasadas();
+        }
+
+        return repository.countAllAtrasadasByUsuarioId(usuario.getId());
+    }
+
     public AtividadeResponse update(Long id, AtividadeRequest request) {
         Atividade atividade = find(id);
 
