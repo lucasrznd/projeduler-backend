@@ -51,6 +51,16 @@ public class ProjetoService {
         return repository.findByUsuarioId(usuario.getId()).stream().map(mapper::toResponse).toList();
     }
 
+    public Long countAllByStatus(String status, UserDetails user) {
+        Usuario usuario = usuarioService.findByEmail(user.getUsername());
+
+        if (usuario.getPerfil().equals("ADMIN")) {
+            return repository.countAllByStatus(status);
+        }
+
+        return repository.countAllByStatusAndUsuarioId(status, usuario.getId());
+    }
+
     public ProjetoResponse update(Long id, ProjetoRequest request) {
         Projeto projeto = find(id);
 

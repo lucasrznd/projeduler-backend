@@ -30,6 +30,11 @@ public class ProjetoControllerImpl implements ProjetoController {
     }
 
     @Override
+    public ResponseEntity<Long> countAllByStatus(String status, UserDetails user) {
+        return ResponseEntity.ok().body(service.countAllByStatus(status, user));
+    }
+
+    @Override
     public ResponseEntity<ProjetoResponse> update(Long id, ProjetoRequest request) {
         return ResponseEntity.ok().body(service.update(id, request));
     }

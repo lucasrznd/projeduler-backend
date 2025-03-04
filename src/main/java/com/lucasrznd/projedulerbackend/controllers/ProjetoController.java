@@ -47,6 +47,16 @@ public interface ProjetoController {
     @GetMapping
     ResponseEntity<List<ProjetoResponse>> findAll(@AuthenticationPrincipal UserDetails userDetails);
 
+    @Operation(summary = "Contar quantidade de projetos")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Quantidade obtida", content = @Content(
+                    mediaType = APPLICATION_JSON_VALUE, schema = @Schema(implementation = Long.class))),
+            @ApiResponse(responseCode = "500", description = "Internal server error", content = @Content(
+                    mediaType = APPLICATION_JSON_VALUE, schema = @Schema(implementation = StandardError.class)))
+    })
+    @GetMapping("/count")
+    ResponseEntity<Long> countAllByStatus(@RequestParam(required = true) String status, @AuthenticationPrincipal UserDetails user);
+
     @Operation(summary = "Atualizar projeto")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Projeto atualizado", content = @Content(
