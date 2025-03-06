@@ -1,6 +1,7 @@
 DROP TABLE IF EXISTS tb_lancamento_hora;
 DROP TABLE IF EXISTS tb_usuario_projeto;
 DROP TABLE IF EXISTS tb_usuario_atividade;
+DROP TABLE IF EXISTS tb_notificacao;
 DROP TABLE IF EXISTS tb_atividade;
 DROP TABLE IF EXISTS tb_projeto;
 DROP TABLE IF EXISTS tb_usuario;
@@ -73,4 +74,19 @@ CREATE TABLE tb_lancamento_hora
     data_inicio   DATETIME,
     data_fim      DATETIME,
     data_registro DATETIME NOT NULL
+);
+
+CREATE TABLE tb_notificacao
+(
+    id           BIGINT PRIMARY KEY AUTO_INCREMENT NOT NULL,
+    usuario_id   BIGINT      NOT NULL,
+    FOREIGN KEY (usuario_id) REFERENCES tb_usuario (id),
+    mensagem     TEXT        NOT NULL,
+    tipo         VARCHAR(50) NOT NULL,
+    data_criacao DATETIME    NOT NULL,
+    lida         BOOLEAN     NOT NULL DEFAULT FALSE,
+    projeto_id   BIGINT,
+    FOREIGN KEY (projeto_id) REFERENCES tb_projeto (id),
+    atividade_id BIGINT,
+    FOREIGN KEY (atividade_id) REFERENCES tb_atividade (id)
 );
