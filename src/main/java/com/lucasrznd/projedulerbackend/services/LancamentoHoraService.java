@@ -8,11 +8,14 @@ import com.lucasrznd.projedulerbackend.models.LancamentoHora;
 import com.lucasrznd.projedulerbackend.models.Usuario;
 import com.lucasrznd.projedulerbackend.repositories.LancamentoHoraRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Locale;
 
@@ -26,9 +29,12 @@ public class LancamentoHoraService {
 
     public LancamentoHoraResponse save(final LancamentoHoraRequest request, UserDetails user) {
         Usuario usuario = usuarioService.findByEmail(user.getUsername());
+        verificarSeLancamentoJaExiste(request.dataInicio(), request.dataFim(), usuario.getId());
 
         LancamentoHora lancamentoHora = mapper.toModel(request);
         lancamentoHora.setUsuario(usuario);
+        lancamentoHora.setDataInicio(truncarSegundos(request.dataInicio()));
+        lancamentoHora.setDataFim(truncarSegundos(request.dataFim()));
         lancamentoHora.setDataRegistro(LocalDateTime.now());
 
         return mapper.toResponse(repository.save(lancamentoHora));
@@ -102,6 +108,19 @@ public class LancamentoHoraService {
     private LancamentoHora find(final Long id) {
         return repository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Lançamento de Hora não encontrado. Id: " + id + ", Tipo: " + LancamentoHoraResponse.class.getSimpleName()));
+    }
+
+    private void verificarSeLancamentoJaExiste(LocalDateTime dataInicio, LocalDateTime dataFim, Long usuarioId) {
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm");
+
+        repository.findByDataInicioAndDataFimAndUsuarioId(truncarSegundos(dataInicio), truncarSegundos(dataFim), usuarioId)
+                .ifPresent(lancamento -> {
+                    throw new DataIntegrityViolationException("Lançamento para o horário [" + dtf.format(dataInicio) + " - " + dtf.format(dataFim) + "] já existe.");
+                });
+    }
+
+    private LocalDateTime truncarSegundos(LocalDateTime data) {
+        return data.truncatedTo(ChronoUnit.SECONDS);
     }
 
     private String calcularTotalHoras(List<LancamentoHora> lancamentos) {
