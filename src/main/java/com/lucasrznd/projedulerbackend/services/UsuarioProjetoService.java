@@ -1,5 +1,6 @@
 package com.lucasrznd.projedulerbackend.services;
 
+import com.lucasrznd.projedulerbackend.dtos.request.NotificacaoRequest;
 import com.lucasrznd.projedulerbackend.dtos.request.UsuarioProjetoRequest;
 import com.lucasrznd.projedulerbackend.dtos.response.UsuarioProjetoResponse;
 import com.lucasrznd.projedulerbackend.exceptions.ResourceNotFoundException;
@@ -22,6 +23,7 @@ public class UsuarioProjetoService {
     private final UsuarioProjetoMapper mapper;
     private final UsuarioService usuarioService;
     private final ProjetoService projetoService;
+    private final NotificacaoService notificacaoService;
 
     public UsuarioProjetoResponse save(final UsuarioProjetoRequest request) {
         Usuario usuario = usuarioService.find(request.usuarioId());
@@ -31,6 +33,14 @@ public class UsuarioProjetoService {
         usuarioProjeto.setUsuario(usuario);
         usuarioProjeto.setProjeto(projeto);
         usuarioProjeto.setDataEntrada(LocalDate.now());
+
+        // Criar notificação de projeto para o usuário
+        NotificacaoRequest notificacao = new NotificacaoRequest(usuario.getId(),
+                notificacaoService.criarMensagem(projeto.getNome(), ""),
+                "NOVO_PROJETO",
+                projeto.getId(), null
+        );
+        notificacaoService.save(notificacao);
 
         return mapper.toResponse(repository.save(usuarioProjeto));
     }
