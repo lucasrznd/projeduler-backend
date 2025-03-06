@@ -28,4 +28,10 @@ public interface AtividadeRepository extends JpaRepository<Atividade, Long> {
     @Query("SELECT COUNT(*) FROM Atividade a INNER JOIN UsuarioAtividade ua ON a.id = ua.usuario.id WHERE a.dataFim < NOW() AND a.status != 'CONCLUIDA' AND ua.usuario.id = :usuarioId")
     Long countAllAtrasadasByUsuarioId(Long usuarioId);
 
+    @Query("SELECT a FROM Atividade a WHERE a.dataFim < NOW() AND a.status != 'CONCLUIDA'")
+    List<Atividade> findAllAtrasadas();
+
+    @Query("SELECT a FROM Atividade a INNER JOIN UsuarioAtividade ua ON a.id = ua.usuario.id WHERE a.dataFim < NOW() AND a.status != 'CONCLUIDA' AND ua.usuario.id = :usuarioId")
+    List<Atividade> findAllAtrasadasByUsuarioId(Long usuarioId);
+
 }

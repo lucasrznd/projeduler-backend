@@ -49,6 +49,16 @@ public class AtividadeService {
         return repository.countAllByStatusAndUsuarioId(status, usuario.getId());
     }
 
+    public List<AtividadeResponse> findAllAtrasadas(UserDetails user) {
+        Usuario usuario = usuarioService.findByEmail(user.getUsername());
+
+        if (usuario.getPerfil().equals("ADMIN")) {
+            return repository.findAllAtrasadas().stream().map(mapper::toResponse).toList();
+        }
+
+        return repository.findAllAtrasadasByUsuarioId(usuario.getId()).stream().map(mapper::toResponse).toList();
+    }
+
     public Long countAllPendentes(UserDetails user) {
         Usuario usuario = usuarioService.findByEmail(user.getUsername());
 

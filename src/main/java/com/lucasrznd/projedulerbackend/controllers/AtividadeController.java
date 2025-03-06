@@ -47,6 +47,16 @@ public interface AtividadeController {
     @GetMapping
     ResponseEntity<List<AtividadeResponse>> findAll(@AuthenticationPrincipal UserDetails user);
 
+    @Operation(summary = "Buscar todas atividades atrasadas")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Atividades encontradas", content = @Content(
+                    mediaType = APPLICATION_JSON_VALUE, array = @ArraySchema(schema = @Schema(implementation = AtividadeResponse.class)))),
+            @ApiResponse(responseCode = "500", description = "Internal server error", content = @Content(
+                    mediaType = APPLICATION_JSON_VALUE, schema = @Schema(implementation = StandardError.class)))
+    })
+    @GetMapping("/atrasadas")
+    ResponseEntity<List<AtividadeResponse>> findAllAtrasadas(@AuthenticationPrincipal UserDetails user);
+
     @Operation(summary = "Atualizar atividade")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Atividade atualizada", content = @Content(

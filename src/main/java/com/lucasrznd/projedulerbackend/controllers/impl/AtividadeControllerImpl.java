@@ -30,6 +30,11 @@ public class AtividadeControllerImpl implements AtividadeController {
     }
 
     @Override
+    public ResponseEntity<List<AtividadeResponse>> findAllAtrasadas(UserDetails user) {
+        return ResponseEntity.ok(service.findAllAtrasadas(user));
+    }
+
+    @Override
     public ResponseEntity<AtividadeResponse> update(Long id, AtividadeRequest request) {
         return ResponseEntity.ok(service.update(id, request));
     }
