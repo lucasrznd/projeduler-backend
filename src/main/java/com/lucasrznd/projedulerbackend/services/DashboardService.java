@@ -39,7 +39,7 @@ public class DashboardService {
         Map<String, Object> metricas = new HashMap<>();
 
         metricas.put("usuariosAtivos", getUsuariosAtivos().quantidade());
-        metricas.put("mediaHoraPorUsuario", 25.4D);
+        metricas.put("mediaHorasMes", lancamentoHoraService.getMediaHorasLancadasPorMes());
 
         metricas.put("projetosPlanejados", projetoService.countAllByStatus("PLANEJADO", usuario));
         metricas.put("projetosEmAndamento", projetoService.countAllByStatus("EM ANDAMENTO", usuario));

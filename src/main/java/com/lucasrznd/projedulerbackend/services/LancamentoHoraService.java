@@ -84,6 +84,11 @@ public class LancamentoHoraService {
         return calcularTotalHoras(repository.findLancamentosDiaAtualByUsuarioId(usuario.getId()));
     }
 
+    public String getMediaHorasLancadasPorMes() {
+        List<LancamentoHora> lancamentos = repository.findLancamentosMesAtual();
+        return String.format("%.2f", Double.parseDouble(calcularTotalHoras(lancamentos)) / lancamentos.size());
+    }
+
     public LancamentoHoraResponse update(Long id, LancamentoHoraRequest request) {
         LancamentoHora lancamentoHora = find(id);
 
