@@ -4,14 +4,15 @@ import com.lucasrznd.projedulerbackend.dtos.request.NotificacaoRequest;
 import com.lucasrznd.projedulerbackend.dtos.request.UsuarioAtividadeRequest;
 import com.lucasrznd.projedulerbackend.dtos.response.UsuarioAtividadeResponse;
 import com.lucasrznd.projedulerbackend.mappers.UsuarioAtividadeMapper;
-import com.lucasrznd.projedulerbackend.models.*;
+import com.lucasrznd.projedulerbackend.models.Atividade;
+import com.lucasrznd.projedulerbackend.models.Usuario;
+import com.lucasrznd.projedulerbackend.models.UsuarioAtividade;
 import com.lucasrznd.projedulerbackend.repositories.UsuarioAtividadeRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
@@ -22,7 +23,6 @@ public class UsuarioAtividadeService {
     private final UsuarioService usuarioService;
     private final AtividadeService atividadeService;
     private final NotificacaoService notificacaoService;
-    private final ProjetoService projetoService;
 
     public UsuarioAtividadeResponse save(final UsuarioAtividadeRequest request) {
         Usuario usuario = usuarioService.find(request.usuarioId());

@@ -1,7 +1,6 @@
 package com.lucasrznd.projedulerbackend.services;
 
 import com.lucasrznd.projedulerbackend.dtos.response.UsuarioAtivoResponse;
-import com.lucasrznd.projedulerbackend.models.AtividadeUsuario;
 import com.lucasrznd.projedulerbackend.models.Usuario;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
