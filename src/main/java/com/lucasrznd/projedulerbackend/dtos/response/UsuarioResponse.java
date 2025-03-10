@@ -7,5 +7,6 @@ public record UsuarioResponse(Long id,
                               String email,
                               LocalDateTime dataCriacao,
                               LocalDateTime ultimoLogin,
-                              String perfil) {
+                              String perfil,
+                              boolean ativo) {
 }

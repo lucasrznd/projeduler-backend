@@ -5,6 +5,7 @@ import com.lucasrznd.projedulerbackend.dtos.response.UsuarioResponse;
 import com.lucasrznd.projedulerbackend.exceptions.ResourceNotFoundException;
 import com.lucasrznd.projedulerbackend.mappers.UsuarioMapper;
 import com.lucasrznd.projedulerbackend.models.Usuario;
+import com.lucasrznd.projedulerbackend.repositories.ProjetoRepository;
 import com.lucasrznd.projedulerbackend.repositories.UsuarioRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -23,6 +24,7 @@ public class UsuarioService {
     private final UsuarioRepository repository;
     private final UsuarioMapper mapper;
     private final BCryptPasswordEncoder encoder;
+    private final ProjetoRepository projetoRepository;
 
     public UsuarioResponse create(final UsuarioRequest request) {
         verifyIfEmailAlreadyExists(request.email(), null);
@@ -76,6 +78,11 @@ public class UsuarioService {
     }
 
     public void delete(final Long id) {
+        Long qtdProjetosAtivos = projetoRepository.countProjetosByUsuarioResponsavelId(id);
+        if (qtdProjetosAtivos > 0) {
+            throw new DataIntegrityViolationException("Usuário não pode ser removido pois é responsavél por projetos.");
+        }
+
         repository.delete(find(id));
     }
 

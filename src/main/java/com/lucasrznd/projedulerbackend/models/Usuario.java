@@ -7,6 +7,8 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.*;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -22,8 +24,10 @@ import java.util.List;
 @AllArgsConstructor
 @With
 @Entity
+@SQLDelete(sql = "UPDATE tb_usuario SET ativo = false WHERE id = ?")
+@Where(clause = "ativo = true")
 @Table(name = "tb_usuario")
-public class Usuario implements UserDetails, Serializable {
+public class Usuario extends BaseEntity implements UserDetails, Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -82,6 +86,6 @@ public class Usuario implements UserDetails, Serializable {
 
     @Override
     public boolean isEnabled() {
-        return true;
+        return isAtivo();
     }
 }
