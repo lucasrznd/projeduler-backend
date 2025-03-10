@@ -8,13 +8,15 @@ DROP TABLE IF EXISTS tb_usuario;
 
 CREATE TABLE tb_usuario
 (
-    id           BIGINT PRIMARY KEY AUTO_INCREMENT NOT NULL,
-    nome         VARCHAR(150) NOT NULL,
-    email        VARCHAR(100) NOT NULL UNIQUE,
-    senha        VARCHAR(255) NOT NULL,
-    data_criacao DATETIME     NOT NULL,
-    ultimo_login DATETIME,
-    perfil       VARCHAR(30)  NOT NULL
+    id            BIGINT PRIMARY KEY AUTO_INCREMENT NOT NULL,
+    nome          VARCHAR(150) NOT NULL,
+    email         VARCHAR(100) NOT NULL UNIQUE,
+    senha         VARCHAR(255) NOT NULL,
+    data_criacao  DATETIME     NOT NULL,
+    ultimo_login  DATETIME,
+    perfil        VARCHAR(30)  NOT NULL,
+    ativo         TINYINT      NOT NULL,
+    data_exclusao DATETIME
 );
 
 CREATE TABLE tb_projeto
@@ -27,7 +29,9 @@ CREATE TABLE tb_projeto
     status                 VARCHAR(50),
     usuario_responsavel_id BIGINT       NOT NULL,
     data_criacao           DATETIME     NOT NULL,
-    prioridade             VARCHAR(20)
+    prioridade             VARCHAR(20),
+    ativo                  TINYINT      NOT NULL,
+    data_exclusao          DATETIME
 );
 
 CREATE TABLE tb_usuario_projeto
@@ -37,7 +41,9 @@ CREATE TABLE tb_usuario_projeto
     FOREIGN KEY (usuario_id) REFERENCES tb_usuario (id),
     projeto_id   BIGINT   NOT NULL,
     FOREIGN KEY (projeto_id) REFERENCES tb_projeto (id),
-    data_entrada DATETIME NOT NULL
+    data_entrada DATETIME NOT NULL,
+    ativo         TINYINT  NOT NULL,
+    data_exclusao DATETIME
 );
 
 CREATE TABLE tb_atividade
@@ -50,7 +56,9 @@ CREATE TABLE tb_atividade
     data_inicio  DATE,
     data_fim     DATE,
     status       VARCHAR(50),
-    data_criacao DATETIME     NOT NULL
+    data_criacao DATETIME     NOT NULL,
+    ativo         TINYINT  NOT NULL,
+    data_exclusao DATETIME
 );
 
 CREATE TABLE tb_usuario_atividade
@@ -73,7 +81,9 @@ CREATE TABLE tb_lancamento_hora
     descricao     TEXT,
     data_inicio   DATETIME,
     data_fim      DATETIME,
-    data_registro DATETIME NOT NULL
+    data_registro DATETIME NOT NULL,
+    ativo         TINYINT  NOT NULL,
+    data_exclusao DATETIME
 );
 
 CREATE TABLE tb_notificacao
