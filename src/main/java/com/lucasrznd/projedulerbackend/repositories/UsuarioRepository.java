@@ -2,9 +2,11 @@ package com.lucasrznd.projedulerbackend.repositories;
 
 import com.lucasrznd.projedulerbackend.models.Usuario;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -18,5 +20,9 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
 
     @Query("SELECT u FROM Usuario u JOIN UsuarioAtividade ua ON u.id = ua.usuario.id WHERE ua.atividade.id = :atividadeId")
     List<Usuario> findAllByAtividadeId(Long atividadeId);
+
+    @Modifying
+    @Query("UPDATE Usuario u SET u.ativo = false, u.dataExclusao =:dataExclusao WHERE u.id =:id")
+    void softDeleteById(Long id, LocalDateTime dataExclusao);
 
 }

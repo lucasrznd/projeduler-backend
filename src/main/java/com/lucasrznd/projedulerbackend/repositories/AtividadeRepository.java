@@ -5,7 +5,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -38,8 +37,11 @@ public interface AtividadeRepository extends JpaRepository<Atividade, Long> {
     List<Atividade> findAllAtrasadasByUsuarioId(Long usuarioId);
 
     @Modifying
-    @Transactional
+    @Query("UPDATE Atividade a SET a.ativo = false, a.dataExclusao =:dataExclusao WHERE a.id =:id")
+    void softDeleteById(Long id, LocalDateTime dataExclusao);
+
+    @Modifying
     @Query("UPDATE Atividade a SET a.ativo = false, a.dataExclusao = :dataExclusao WHERE a.projeto.id = :projetoId")
-    void deleteByProjetoId(Long projetoId, LocalDateTime dataExclusao);
+    void softDeleteAllByProjetoId(Long projetoId, LocalDateTime dataExclusao);
 
 }
