@@ -1,6 +1,7 @@
 package com.lucasrznd.projedulerbackend.exceptions.handler;
 
 import com.auth0.jwt.exceptions.JWTVerificationException;
+import com.lucasrznd.projedulerbackend.exceptions.BusinessRuleException;
 import com.lucasrznd.projedulerbackend.exceptions.ResourceNotFoundException;
 import com.lucasrznd.projedulerbackend.exceptions.StandardError;
 import com.lucasrznd.projedulerbackend.exceptions.ValidationException;
@@ -91,6 +92,16 @@ public class ControllerExceptionHandler {
                         .status(UNAUTHORIZED.value())
                         .error(UNAUTHORIZED.getReasonPhrase())
                         .message(ex.getMessage())
+                        .path(request.getRequestURI()).build()
+        );
+    }
+
+    @ExceptionHandler(BusinessRuleException.class)
+    public ResponseEntity<StandardError> handleBusinessRuleException(final BusinessRuleException ex, final HttpServletRequest request) {
+        return ResponseEntity.status(CONFLICT).body(
+                StandardError.builder()
+                        .timestamp(LocalDateTime.now()).status(CONFLICT.value())
+                        .error(CONFLICT.getReasonPhrase()).message(ex.getMessage())
                         .path(request.getRequestURI()).build()
         );
     }
