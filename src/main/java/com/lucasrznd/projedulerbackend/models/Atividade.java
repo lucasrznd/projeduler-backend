@@ -12,7 +12,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 
 import java.io.Serializable;
@@ -24,7 +23,6 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@SQLDelete(sql = "UPDATE tb_atividade SET ativo = false, data_exclusao = CURRENT_TIMESTAMP WHERE id = ?")
 @Where(clause = "ativo = true")
 @Table(name = "tb_atividade")
 public class Atividade extends BaseEntity implements Serializable {

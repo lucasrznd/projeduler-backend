@@ -24,7 +24,6 @@ import java.util.List;
 @AllArgsConstructor
 @With
 @Entity
-@SQLDelete(sql = "UPDATE tb_usuario SET ativo = false WHERE id = ?")
 @Where(clause = "ativo = true")
 @Table(name = "tb_usuario")
 public class Usuario extends BaseEntity implements UserDetails, Serializable {

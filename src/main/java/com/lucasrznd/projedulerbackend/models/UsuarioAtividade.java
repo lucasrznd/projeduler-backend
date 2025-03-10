@@ -12,7 +12,9 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.Where;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @Getter
@@ -20,8 +22,9 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+@Where(clause = "ativo = true")
 @Table(name = "tb_usuario_atividade")
-public class UsuarioAtividade {
+public class UsuarioAtividade extends BaseEntity implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
