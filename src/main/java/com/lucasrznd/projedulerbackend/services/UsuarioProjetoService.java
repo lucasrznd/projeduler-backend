@@ -11,8 +11,10 @@ import com.lucasrznd.projedulerbackend.models.UsuarioProjeto;
 import com.lucasrznd.projedulerbackend.repositories.UsuarioProjetoRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -55,8 +57,11 @@ public class UsuarioProjetoService {
         return mapper.toResponse(repository.save(mapper.update(request, usuarioProjeto)));
     }
 
+    @Transactional
     public void delete(final Long usuarioId, final Long projetoId) {
-        repository.delete(findByUsuarioIdAndProjetoId(usuarioId, projetoId));
+        UsuarioProjeto usuarioProjeto = findByUsuarioIdAndProjetoId(usuarioId, projetoId);
+
+        repository.softDeleteById(usuarioProjeto.getId(), LocalDateTime.now());
     }
 
     private UsuarioProjeto findByUsuarioIdAndProjetoId(Long usuarioId, Long projetoId) {

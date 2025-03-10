@@ -7,9 +7,11 @@ import com.lucasrznd.projedulerbackend.mappers.AtividadeMapper;
 import com.lucasrznd.projedulerbackend.models.Atividade;
 import com.lucasrznd.projedulerbackend.models.Usuario;
 import com.lucasrznd.projedulerbackend.repositories.AtividadeRepository;
+import com.lucasrznd.projedulerbackend.repositories.UsuarioAtividadeRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -21,7 +23,8 @@ public class AtividadeService {
     private final AtividadeRepository repository;
     private final AtividadeMapper mapper;
     private final UsuarioService usuarioService;
-    private final LancamentoHoraService lancamentoHoraService;
+
+    private final UsuarioAtividadeRepository usuarioAtividadeRepository;
 
     public AtividadeResponse save(final AtividadeRequest request) {
         Atividade atividade = mapper.toModel(request);
@@ -86,18 +89,63 @@ public class AtividadeService {
         return mapper.toResponse(repository.save(mapper.update(request, atividade)));
     }
 
+    /**
+     * Realiza a exclusão lógica (soft delete) de uma atividade específica e suas associações com usuários.
+     * Esta operação marca a atividade como inativa no sistema, preservando seu histórico para consultas futuras.
+     * Todas as operações são executadas dentro de uma única transação para garantir a integridade dos dados.
+     *
+     * <p>O processo de exclusão inclui os seguintes passos:</p>
+     * <ol>
+     *     <li>Recuperação da atividade pelo seu identificador</li>
+     *     <li>Exclusão lógica de todas as associações entre usuários e a atividade</li>
+     *     <li>Exclusão lógica da atividade em si</li>
+     * </ol>
+     *
+     * <p>A mesma data e hora de exclusão é aplicada a todos os registros para manter a consistência
+     * temporal da operação.</p>
+     *
+     * @param id Identificador único da atividade a ser excluída logicamente
+     * @throws ResourceNotFoundException se a atividade com o ID especificado não existir
+     */
+    @Transactional
     public void delete(final Long id) {
-        lancamentoHoraService.deleteByAtividadeId(find(id).getId(), LocalDateTime.now());
-        repository.delete(find(id));
+        Atividade atividade = find(id);
+        LocalDateTime dataExclusao = LocalDateTime.now();
+
+        // Soft delete nos relacionamentos de usuários em atividades
+        usuarioAtividadeRepository.softDeleteAllByAtividadeId(atividade.getId(), dataExclusao);
+
+        repository.softDeleteById(atividade.getId(), dataExclusao);
     }
 
-    public void deleteByAtividadeId(Long projetoId, LocalDateTime dataExclusao) {
-        lancamentoHoraService.deleteByProjetoId(projetoId, dataExclusao);
-        repository.deleteByProjetoId(projetoId, dataExclusao);
+    /**
+     * Realiza a exclusão lógica (soft delete) de todas as atividades associadas a um projeto específico
+     * e suas associações com usuários.
+     * Esta operação é geralmente executada como parte do processo de exclusão de um projeto.
+     * Todas as operações são executadas dentro de uma única transação para garantir a integridade dos dados.
+     *
+     * <p>O processo de exclusão inclui os seguintes passos:</p>
+     * <ol>
+     *     <li>Exclusão lógica de todas as associações entre usuários e as atividades do projeto</li>
+     *     <li>Exclusão lógica de todas as atividades vinculadas ao projeto</li>
+     * </ol>
+     *
+     * <p>A mesma data e hora de exclusão é aplicada a todos os registros para manter a consistência
+     * temporal da operação e facilitar auditorias futuras.</p>
+     *
+     * @param projetoId Identificador único do projeto cujas atividades serão excluídas logicamente
+     * @param dataExclusao Data e hora em que a exclusão lógica está sendo realizada
+     */
+    @Transactional
+    public void softDeleteAllByProjetoId(Long projetoId, LocalDateTime dataExclusao) {
+        // Soft delete nos relacionamentos do usuário em atividades
+        usuarioAtividadeRepository.softDeleteAllByProjetoId(projetoId, dataExclusao);
+
+        repository.softDeleteAllByProjetoId(projetoId, dataExclusao);
     }
 
     public Atividade find(final Long id) {
         return repository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Atividade não encontrada. Id: " + id + ", Tipo: " + AtividadeResponse.class.getSimpleName()));
+                .orElseThrow(() -> new ResourceNotFoundException("Atividade não encontrada. Id: " + id));
     }
 }

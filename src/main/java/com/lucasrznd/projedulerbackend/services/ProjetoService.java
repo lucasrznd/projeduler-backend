@@ -7,10 +7,12 @@ import com.lucasrznd.projedulerbackend.mappers.ProjetoMapper;
 import com.lucasrznd.projedulerbackend.models.Projeto;
 import com.lucasrznd.projedulerbackend.models.Usuario;
 import com.lucasrznd.projedulerbackend.repositories.ProjetoRepository;
+import com.lucasrznd.projedulerbackend.repositories.UsuarioProjetoRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -23,6 +25,8 @@ public class ProjetoService {
     private final ProjetoMapper mapper;
     private final UsuarioService usuarioService;
     private final AtividadeService atividadeService;
+
+    private final UsuarioProjetoRepository usuarioProjetoRepository;
 
     public ProjetoResponse save(final ProjetoRequest request) {
         Projeto projeto = mapper.toModel(request);
@@ -62,19 +66,58 @@ public class ProjetoService {
         return repository.countAllByStatusAndUsuarioId(status, usuario.getId());
     }
 
-    public Long countProjetosByUsuarioResponsavelId(Long usuarioId) {
-        return repository.countProjetosByUsuarioResponsavelId(usuarioId);
-    }
-
     public ProjetoResponse update(Long id, ProjetoRequest request) {
         Projeto projeto = find(id);
 
         return mapper.toResponse(repository.save(mapper.update(request, projeto)));
     }
 
+    /**
+     * Realiza a exclusão lógica (soft delete) de um projeto e todos os seus registros associados.
+     * Esta operação marca o projeto como inativo no sistema, preservando seu histórico para consultas futuras.
+     * Todas as operações são executadas dentro de uma única transação para garantir a integridade dos dados.
+     *
+     * <p>O processo de exclusão inclui os seguintes passos:</p>
+     * <ol>
+     *     <li>Recuperação do projeto pelo seu identificador</li>
+     *     <li>Execução da exclusão lógica em cascata dos registros associados (atividades e usuários relacionados)</li>
+     *     <li>Exclusão lógica do projeto em si</li>
+     * </ol>
+     *
+     * <p>A mesma data e hora de exclusão é aplicada a todos os registros para manter a consistência
+     * temporal da operação.</p>
+     *
+     * @param id Identificador único do projeto a ser excluído logicamente
+     * @throws ResourceNotFoundException se o projeto com o ID especificado não existir
+     */
+    @Transactional
     public void delete(final Long id) {
-        atividadeService.deleteByAtividadeId(id, LocalDateTime.now());
-        repository.delete(find(id));
+        Projeto projeto = find(id);
+        LocalDateTime dataExclusao = LocalDateTime.now();
+
+        // Deleta todas as atividades associadas ao projeto
+        cascadeSoftDelete(projeto.getId(), dataExclusao);
+
+        repository.softDeleteById(projeto.getId(), dataExclusao);
+    }
+
+    /**
+     * Executa a exclusão lógica em cascata de todos os registros relacionados a um projeto.
+     * Este método coordena a exclusão lógica de:
+     * <ul>
+     *     <li>Todas as atividades vinculadas ao projeto (que por sua vez desencadeiam a exclusão dos lançamentos de horas)</li>
+     *     <li>Todas as associações entre usuários e o projeto</li>
+     * </ul>
+     *
+     * <p>Este método é utilizado como parte da exclusão completa de um projeto, garantindo
+     * que todos os registros associados sejam desativados de forma consistente.</p>
+     *
+     * @param id Identificador único do projeto cujos registros associados serão excluídos logicamente
+     * @param dataExclusao Data e hora em que a exclusão lógica está sendo realizada
+     */
+    public void cascadeSoftDelete(final Long id, final LocalDateTime dataExclusao) {
+        atividadeService.softDeleteAllByProjetoId(id, dataExclusao);
+        usuarioProjetoRepository.softDeleteAllByProjetoId(id, dataExclusao);
     }
 
     public Projeto find(final Long id) {

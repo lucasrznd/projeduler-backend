@@ -10,6 +10,7 @@ import com.lucasrznd.projedulerbackend.models.UsuarioAtividade;
 import com.lucasrznd.projedulerbackend.repositories.UsuarioAtividadeRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -57,8 +58,11 @@ public class UsuarioAtividadeService {
         return repository.findAll().stream().map(mapper::toResponse).toList();
     }
 
+    @Transactional
     public void delete(final Long usuarioId, final Long atividadeId) {
-        repository.delete(findByUsuarioIdAndAtividadeId(usuarioId, atividadeId));
+        UsuarioAtividade usuarioAtividade = findByUsuarioIdAndAtividadeId(usuarioId, atividadeId);
+
+        repository.softDeleteById(usuarioAtividade.getId(), LocalDateTime.now());
     }
 
     private UsuarioAtividade findByUsuarioIdAndAtividadeId(final Long usuarioId, final Long atividadeId) {

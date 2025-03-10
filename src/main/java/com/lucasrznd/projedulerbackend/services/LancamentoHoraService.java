@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
@@ -101,16 +102,11 @@ public class LancamentoHoraService {
         return mapper.toResponse(repository.save(mapper.update(request, lancamentoHora)));
     }
 
+    @Transactional
     public void delete(final Long id) {
-        repository.delete(find(id));
-    }
+        LancamentoHora lancamentoHora = find(id);
 
-    public void deleteByProjetoId(Long projetoId, LocalDateTime dataExclusao) {
-        repository.deleteByProjetoId(projetoId, dataExclusao);
-    }
-
-    public void deleteByAtividadeId(Long atividadeId, LocalDateTime dataExclusao) {
-        repository.deleteByAtividadeId(atividadeId, dataExclusao);
+        repository.delete(lancamentoHora);
     }
 
     private LancamentoHora find(final Long id) {
