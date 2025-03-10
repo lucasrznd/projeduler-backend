@@ -2,9 +2,12 @@ package com.lucasrznd.projedulerbackend.repositories;
 
 import com.lucasrznd.projedulerbackend.models.Atividade;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Repository
@@ -33,5 +36,10 @@ public interface AtividadeRepository extends JpaRepository<Atividade, Long> {
 
     @Query("SELECT a FROM Atividade a INNER JOIN UsuarioAtividade ua ON a.id = ua.usuario.id WHERE a.dataFim < NOW() AND a.status != 'CONCLUIDA' AND ua.usuario.id = :usuarioId")
     List<Atividade> findAllAtrasadasByUsuarioId(Long usuarioId);
+
+    @Modifying
+    @Transactional
+    @Query("UPDATE Atividade a SET a.ativo = false, a.dataExclusao = :dataExclusao WHERE a.projeto.id = :projetoId")
+    void deleteByProjetoId(Long projetoId, LocalDateTime dataExclusao);
 
 }

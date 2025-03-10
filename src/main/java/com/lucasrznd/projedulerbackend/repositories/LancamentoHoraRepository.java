@@ -2,8 +2,10 @@ package com.lucasrznd.projedulerbackend.repositories;
 
 import com.lucasrznd.projedulerbackend.models.LancamentoHora;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -44,5 +46,18 @@ public interface LancamentoHoraRepository extends JpaRepository<LancamentoHora, 
 
     @Query("SELECT lh FROM LancamentoHora lh WHERE DAY(lh.dataRegistro) = DAY(CURRENT_DATE) AND YEAR(lh.dataRegistro) = YEAR(CURRENT_DATE) AND MONTH(lh.dataRegistro) = MONTH(CURRENT_DATE) AND lh.usuario.id = :usuarioId")
     List<LancamentoHora> findLancamentosDiaAtualByUsuarioId(Long usuarioId);
+
+    @Modifying
+    @Transactional
+    @Query("UPDATE LancamentoHora lh SET lh.ativo = false, lh.dataExclusao = :dataExclusao " +
+            "WHERE lh.atividade.id IN (SELECT a.id FROM Atividade a WHERE a.projeto.id = :projetoId AND a.ativo = true) " +
+            "AND lh.ativo = true")
+    void deleteByProjetoId(Long projetoId, LocalDateTime dataExclusao);
+
+    @Modifying
+    @Transactional
+    @Query("UPDATE LancamentoHora lh SET lh.ativo = false, lh.dataExclusao = :dataExclusao WHERE lh.atividade.id = :atividadeId")
+    void deleteByAtividadeId(Long atividadeId, LocalDateTime dataExclusao);
+
 
 }

@@ -105,6 +105,14 @@ public class LancamentoHoraService {
         repository.delete(find(id));
     }
 
+    public void deleteByProjetoId(Long projetoId, LocalDateTime dataExclusao) {
+        repository.deleteByProjetoId(projetoId, dataExclusao);
+    }
+
+    public void deleteByAtividadeId(Long atividadeId, LocalDateTime dataExclusao) {
+        repository.deleteByAtividadeId(atividadeId, dataExclusao);
+    }
+
     private LancamentoHora find(final Long id) {
         return repository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Lançamento de Hora não encontrado. Id: " + id + ", Tipo: " + LancamentoHoraResponse.class.getSimpleName()));

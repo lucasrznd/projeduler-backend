@@ -22,6 +22,7 @@ public class ProjetoService {
     private final ProjetoRepository repository;
     private final ProjetoMapper mapper;
     private final UsuarioService usuarioService;
+    private final AtividadeService atividadeService;
 
     public ProjetoResponse save(final ProjetoRequest request) {
         Projeto projeto = mapper.toModel(request);
@@ -61,6 +62,10 @@ public class ProjetoService {
         return repository.countAllByStatusAndUsuarioId(status, usuario.getId());
     }
 
+    public Long countProjetosByUsuarioResponsavelId(Long usuarioId) {
+        return repository.countProjetosByUsuarioResponsavelId(usuarioId);
+    }
+
     public ProjetoResponse update(Long id, ProjetoRequest request) {
         Projeto projeto = find(id);
 
@@ -68,6 +73,7 @@ public class ProjetoService {
     }
 
     public void delete(final Long id) {
+        atividadeService.deleteByAtividadeId(id, LocalDateTime.now());
         repository.delete(find(id));
     }
 

@@ -21,6 +21,7 @@ public class AtividadeService {
     private final AtividadeRepository repository;
     private final AtividadeMapper mapper;
     private final UsuarioService usuarioService;
+    private final LancamentoHoraService lancamentoHoraService;
 
     public AtividadeResponse save(final AtividadeRequest request) {
         Atividade atividade = mapper.toModel(request);
@@ -86,7 +87,13 @@ public class AtividadeService {
     }
 
     public void delete(final Long id) {
+        lancamentoHoraService.deleteByAtividadeId(find(id).getId(), LocalDateTime.now());
         repository.delete(find(id));
+    }
+
+    public void deleteByAtividadeId(Long projetoId, LocalDateTime dataExclusao) {
+        lancamentoHoraService.deleteByProjetoId(projetoId, dataExclusao);
+        repository.deleteByProjetoId(projetoId, dataExclusao);
     }
 
     public Atividade find(final Long id) {
