@@ -68,7 +68,9 @@ CREATE TABLE tb_usuario_atividade
     FOREIGN KEY (usuario_id) REFERENCES tb_usuario (id),
     atividade_id BIGINT   NOT NULL,
     FOREIGN KEY (atividade_id) REFERENCES tb_atividade (id),
-    data_entrada DATETIME NOT NULL
+    data_entrada DATETIME NOT NULL,
+    ativo         TINYINT  NOT NULL,
+    data_exclusao DATETIME
 );
 
 CREATE TABLE tb_lancamento_hora
@@ -81,9 +83,7 @@ CREATE TABLE tb_lancamento_hora
     descricao     TEXT,
     data_inicio   DATETIME,
     data_fim      DATETIME,
-    data_registro DATETIME NOT NULL,
-    ativo         TINYINT  NOT NULL,
-    data_exclusao DATETIME
+    data_registro DATETIME NOT NULL
 );
 
 CREATE TABLE tb_notificacao
