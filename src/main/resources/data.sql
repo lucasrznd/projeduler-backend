@@ -262,6 +262,14 @@ INSERT INTO tb_usuario_atividade (usuario_id, atividade_id, data_entrada, ativo)
 INSERT INTO tb_usuario_atividade (usuario_id, atividade_id, data_entrada, ativo) VALUE (7, 33, '2025-02-28 09:45:00', 1);
 INSERT INTO tb_usuario_atividade (usuario_id, atividade_id, data_entrada, ativo) VALUE (8, 34, '2025-03-01 10:30:00', 1);
 INSERT INTO tb_usuario_atividade (usuario_id, atividade_id, data_entrada, ativo) VALUE (9, 35, '2025-03-02 15:00:00', 1);
+INSERT INTO tb_usuario_atividade (usuario_id, atividade_id, data_entrada, ativo) VALUE (5, 11, '2025-03-10 08:00:00', 1);
+INSERT INTO tb_usuario_atividade (usuario_id, atividade_id, data_entrada, ativo) VALUE (6, 12, '2025-03-10 09:30:00', 1);
+INSERT INTO tb_usuario_atividade (usuario_id, atividade_id, data_entrada, ativo) VALUE (7, 13, '2025-03-11 10:15:00', 1);
+INSERT INTO tb_usuario_atividade (usuario_id, atividade_id, data_entrada, ativo) VALUE (8, 14, '2025-03-11 14:45:00', 1);
+INSERT INTO tb_usuario_atividade (usuario_id, atividade_id, data_entrada, ativo) VALUE (9, 15, '2025-03-12 08:30:00', 1);
+INSERT INTO tb_usuario_atividade (usuario_id, atividade_id, data_entrada, ativo) VALUE (5, 16, '2025-03-12 13:00:00', 1);
+INSERT INTO tb_usuario_atividade (usuario_id, atividade_id, data_entrada, ativo) VALUE (6, 17, '2025-03-13 09:00:00', 1);
+INSERT INTO tb_usuario_atividade (usuario_id, atividade_id, data_entrada, ativo) VALUE (7, 18, '2025-03-13 15:30:00', 1);
 
 -- Inserindo Lançamentos de Horas
 INSERT INTO tb_lancamento_hora (id, atividade_id, usuario_id, descricao, data_inicio, data_fim,
@@ -275,15 +283,15 @@ INSERT INTO tb_lancamento_hora (id, atividade_id, usuario_id, descricao, data_in
 INSERT INTO tb_lancamento_hora (id, atividade_id, usuario_id, descricao, data_inicio, data_fim,
                                 data_registro) VALUE (5, 4, 10, 'Modelagem do banco de dados ERP', '2025-02-06 09:15:00', '2025-02-06 15:45:00', '2025-02-06 15:48:00');
 INSERT INTO tb_lancamento_hora (id, atividade_id, usuario_id, descricao, data_inicio, data_fim,
-                                data_registro) VALUE (6, 6, 8, 'Análise de processos existentes', '2025-06-06 13:00:00', '2025-06-06 17:00:00', '2025-06-06 17:01:20');
+                                data_registro) VALUE (6, 6, 8, 'Análise de processos existentes', '2025-03-09 13:00:00', '2025-03-09 17:00:00', '2025-03-09 17:01:20');
 INSERT INTO tb_lancamento_hora (id, atividade_id, usuario_id, descricao, data_inicio, data_fim,
-                                data_registro) VALUE (7, 7, 9, 'Treinamento de modelo NLP', '2025-07-15 08:45:00', '2025-07-15 19:00:00', '2025-07-15 19:10:00');
+                                data_registro) VALUE (7, 7, 9, 'Treinamento de modelo NLP', '2025-03-08 08:45:00', '2025-03-08 19:00:00', '2025-03-08 19:10:00');
 INSERT INTO tb_lancamento_hora (id, atividade_id, usuario_id, descricao, data_inicio, data_fim,
-                                data_registro) VALUE (8, 8, 10, 'Reunião com stakeholders', '2025-08-07 10:30:00', '2025-08-07 14:00:00', '2025-08-07 14:05:00');
+                                data_registro) VALUE (8, 8, 10, 'Reunião com stakeholders', '2025-03-06 10:30:00', '2025-03-06 14:00:00', '2025-03-06 14:05:00');
 INSERT INTO tb_lancamento_hora (id, atividade_id, usuario_id, descricao, data_inicio, data_fim,
-                                data_registro) VALUE (9, 9, 6, 'Configuração de infraestrutura inicial', '2025-09-10 07:50:00', '2025-09-10 18:20:00', '2025-09-10 18:20:00');
+                                data_registro) VALUE (9, 9, 6, 'Configuração de infraestrutura inicial', '2025-03-05 07:50:00', '2025-03-05 18:20:00', '2025-03-05 18:25:00');
 INSERT INTO tb_lancamento_hora (id, atividade_id, usuario_id, descricao, data_inicio, data_fim,
-                                data_registro) VALUE (10, 10, 7, 'Gravação de videoaulas', '2025-10-15 09:00:00', '2025-10-15 16:30:00', '2025-10-15 16:31:00');
+                                data_registro) VALUE (10, 10, 7, 'Gravação de videoaulas', '2025-03-12 09:00:00', '2025-03-12 16:30:00', '2025-03-12 16:31:00');
 INSERT INTO tb_lancamento_hora (id, atividade_id, usuario_id, descricao, data_inicio, data_fim,
                                 data_registro) VALUE (11, 11, 8, 'Implementação do cálculo de salários', '2024-02-06 08:00:00', '2024-02-06 18:00:00', '2024-02-06 18:03:10');
 INSERT INTO tb_lancamento_hora (id, atividade_id, usuario_id, descricao, data_inicio, data_fim,
@@ -314,3 +322,19 @@ INSERT INTO tb_lancamento_hora (id, atividade_id, usuario_id, descricao, data_in
                                 data_registro) VALUE (24, 34, 8, 'Definição de alertas no monitoramento', '2025-03-01 10:30:00', '2025-03-01 14:30:00', '2025-03-01 14:35:45');
 INSERT INTO tb_lancamento_hora (id, atividade_id, usuario_id, descricao, data_inicio, data_fim,
                                 data_registro) VALUE (25, 35, 9, 'Planejamento da gamificação da plataforma', '2025-03-02 15:00:00', '2025-03-02 18:00:00', '2025-03-02 18:10:00');
+INSERT INTO tb_lancamento_hora (id, atividade_id, usuario_id, descricao, data_inicio, data_fim,
+                                data_registro) VALUE (26, 11, 5, 'Análise de feedbacks do onboarding', '2025-03-10 08:00:00', '2025-03-10 11:00:00', '2025-03-10 11:30:00');
+INSERT INTO tb_lancamento_hora (id, atividade_id, usuario_id, descricao, data_inicio, data_fim,
+                                data_registro) VALUE (27, 12, 6, 'Modelagem de tabelas adicionais', '2025-03-10 09:30:00', '2025-03-10 12:30:00', '2025-03-10 12:45:00');
+INSERT INTO tb_lancamento_hora (id, atividade_id, usuario_id, descricao, data_inicio, data_fim,
+                                data_registro) VALUE (28, 13, 7, 'Ajustes no protótipo do UI', '2025-03-11 10:15:00', '2025-03-11 13:15:00', '2025-03-11 13:30:00');
+INSERT INTO tb_lancamento_hora (id, atividade_id, usuario_id, descricao, data_inicio, data_fim,
+                                data_registro) VALUE (29, 14, 8, 'Definição de estratégias para campanhas', '2025-03-11 14:45:00', '2025-03-11 17:30:00', '2025-03-11 17:45:00');
+INSERT INTO tb_lancamento_hora (id, atividade_id, usuario_id, descricao, data_inicio, data_fim,
+                                data_registro) VALUE (30, 15, 9, 'Configuração de gráficos no dashboard', '2025-03-12 08:30:00', '2025-03-12 11:30:00', '2025-03-12 11:45:00');
+INSERT INTO tb_lancamento_hora (id, atividade_id, usuario_id, descricao, data_inicio, data_fim,
+                                data_registro) VALUE (31, 16, 5, 'Correção de bugs nos scripts de automação', '2025-03-12 13:00:00', '2025-03-12 16:00:00', '2025-03-12 16:15:00');
+INSERT INTO tb_lancamento_hora (id, atividade_id, usuario_id, descricao, data_inicio, data_fim,
+                                data_registro) VALUE (32, 17, 6, 'Testes de integração com chatbot', '2025-03-13 09:00:00', '2025-03-13 12:00:00', '2025-03-13 12:30:00');
+INSERT INTO tb_lancamento_hora (id, atividade_id, usuario_id, descricao, data_inicio, data_fim,
+                                data_registro) VALUE (33, 18, 7, 'Revisão dos endpoints da API bancária', '2025-03-13 15:30:00', '2025-03-13 18:30:00', '2025-03-13 18:45:00');
