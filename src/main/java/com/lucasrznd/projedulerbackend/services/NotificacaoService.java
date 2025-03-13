@@ -8,7 +8,6 @@ import com.lucasrznd.projedulerbackend.models.Notificacao;
 import com.lucasrznd.projedulerbackend.models.Usuario;
 import com.lucasrznd.projedulerbackend.repositories.NotificacaoRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
@@ -22,7 +21,6 @@ public class NotificacaoService {
     private final NotificacaoRepository repository;
     private final NotificacaoMapper mapper;
     private final UsuarioService usuarioService;
-    private final SimpMessagingTemplate messagingTemplate;
 
     public void save(final NotificacaoRequest request) {
         Notificacao notificacao = mapper.toModel(request);
@@ -30,11 +28,6 @@ public class NotificacaoService {
         notificacao.setLida(false);
 
         repository.save(notificacao);
-
-        messagingTemplate.convertAndSend(
-                "/topico/notificacoes",
-                mapper.toResponse(notificacao)
-            );
     }
 
     public List<NotificacaoResponse> findAll(UserDetails user) {
