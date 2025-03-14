@@ -1,14 +1,16 @@
 package com.lucasrznd.projedulerbackend.services;
 
-import com.lucasrznd.projedulerbackend.dtos.request.NotificacaoRequest;
 import com.lucasrznd.projedulerbackend.dtos.request.UsuarioAtividadeRequest;
 import com.lucasrznd.projedulerbackend.dtos.response.UsuarioAtividadeResponse;
 import com.lucasrznd.projedulerbackend.mappers.UsuarioAtividadeMapper;
 import com.lucasrznd.projedulerbackend.models.Atividade;
+import com.lucasrznd.projedulerbackend.models.Notificacao;
 import com.lucasrznd.projedulerbackend.models.Usuario;
 import com.lucasrznd.projedulerbackend.models.UsuarioAtividade;
 import com.lucasrznd.projedulerbackend.repositories.UsuarioAtividadeRepository;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.hibernate.service.spi.ServiceException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,24 +27,28 @@ public class UsuarioAtividadeService {
     private final AtividadeService atividadeService;
     private final NotificacaoService notificacaoService;
 
+    @Transactional
     public UsuarioAtividadeResponse save(final UsuarioAtividadeRequest request) {
-        Usuario usuario = usuarioService.find(request.usuarioId());
-        Atividade atividade = atividadeService.find(request.atividadeId());
+        try {
+            Usuario usuario = usuarioService.find(request.usuarioId());
+            Atividade atividade = atividadeService.find(request.atividadeId());
 
-        UsuarioAtividade usuarioAtividade = mapper.toModel(request);
-        usuarioAtividade.setUsuario(usuario);
-        usuarioAtividade.setAtividade(atividade);
-        usuarioAtividade.setDataEntrada(LocalDateTime.now());
+            UsuarioAtividade usuarioAtividade = mapper.toModel(request);
+            usuarioAtividade.setUsuario(usuario);
+            usuarioAtividade.setAtividade(atividade);
+            usuarioAtividade.setDataEntrada(LocalDateTime.now());
 
-        // Criar notificação de atividade para o usuário
-        NotificacaoRequest notificacao = new NotificacaoRequest(usuario.getId(),
-                notificacaoService.criarMensagem("", atividade.getNome()),
-                "NOVO_PROJETO",
-                atividade.getId(), null
-        );
-        notificacaoService.save(notificacao);
+            UsuarioAtividade entidadeSalva = repository.save(usuarioAtividade);
 
-        return mapper.toResponse(repository.save(usuarioAtividade));
+            // Notificar sobre associação
+            criarNotificacaoAssociacao(usuario, atividade);
+
+            return mapper.toResponse(entidadeSalva);
+        } catch (EntityNotFoundException e) {
+            throw e;
+        } catch (Exception e) {
+            throw new ServiceException("Não foi possível completar a associação usuário-atividade", e);
+        }
     }
 
     public List<UsuarioAtividadeResponse> saveAll(final List<UsuarioAtividadeRequest> requests) {
@@ -68,5 +74,17 @@ public class UsuarioAtividadeService {
     private UsuarioAtividade findByUsuarioIdAndAtividadeId(final Long usuarioId, final Long atividadeId) {
         return repository.findByUsuarioIdAndAtividadeId(usuarioId, atividadeId)
                 .orElseThrow(() -> new RuntimeException("Usuário da atividade não encontrado. Id: " + usuarioId));
+    }
+
+    private void criarNotificacaoAssociacao(Usuario usuario, Atividade atividade) {
+        Notificacao notificacao = new Notificacao();
+        notificacao.setUsuario(usuario);
+        notificacao.setMensagem(notificacaoService.criarMensagem("", atividade.getNome()));
+        notificacao.setTipo("NOVA_ATIVIDADE");
+        notificacao.setDataCriacao(LocalDateTime.now());
+        notificacao.setLida(false);
+        notificacao.setAtividade(atividade);
+
+        notificacaoService.save(notificacao);
     }
 }
