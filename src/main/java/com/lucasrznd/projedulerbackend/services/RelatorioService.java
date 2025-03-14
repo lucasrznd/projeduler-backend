@@ -4,9 +4,11 @@ import com.lucasrznd.projedulerbackend.dtos.response.AtividadePorStatusResponse;
 import com.lucasrznd.projedulerbackend.dtos.response.HorasPorMesResponse;
 import com.lucasrznd.projedulerbackend.dtos.response.HorasPorProjetoResponse;
 import com.lucasrznd.projedulerbackend.dtos.response.TopUsuarioResponse;
+import com.lucasrznd.projedulerbackend.models.Usuario;
 import com.lucasrznd.projedulerbackend.repositories.AtividadeRepository;
 import com.lucasrznd.projedulerbackend.repositories.LancamentoHoraRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -21,12 +23,13 @@ public class RelatorioService {
 
     private final LancamentoHoraRepository lancamentoHoraRepository;
     private final AtividadeRepository atividadeRepository;
+    private final UsuarioService usuarioService;
 
     /**
      * Busca horas trabalhadas por projeto com base nos filtros informados
      */
     public List<HorasPorProjetoResponse> buscarHorasPorProjeto(
-            LocalDate dataInicio, LocalDate dataFim, Long projetoId, Long usuarioId, String status) {
+            UserDetails user, LocalDate dataInicio, LocalDate dataFim, Long projetoId, Long usuarioId, String status) {
 
         // Definir datas padrão se não forem fornecidas
         if (dataInicio == null) {
@@ -42,7 +45,7 @@ public class RelatorioService {
 
         // Buscar dados do banco
         List<Object[]> resultados = lancamentoHoraRepository.buscarHorasPorProjeto(
-                dataInicioDateTime, dataFimDateTime, projetoId, usuarioId, status);
+                dataInicioDateTime, dataFimDateTime, projetoId, adminOuUsuario(usuarioId, user), status);
 
         // Converter resultados para DTOs
         List<HorasPorProjetoResponse> dtos = new ArrayList<>();
@@ -58,7 +61,7 @@ public class RelatorioService {
      * Busca horas trabalhadas por mês com base nos filtros informados
      */
     public List<HorasPorMesResponse> buscarHorasPorMes(
-            LocalDate dataInicio, LocalDate dataFim, Long projetoId, Long usuarioId, String status) {
+            UserDetails user, LocalDate dataInicio, LocalDate dataFim, Long projetoId, Long usuarioId, String status) {
 
         // Definir datas padrão se não forem fornecidas
         if (dataInicio == null) {
@@ -74,7 +77,7 @@ public class RelatorioService {
 
         // Buscar dados do banco
         List<Object[]> resultados = lancamentoHoraRepository.buscarHorasPorMes(
-                dataInicioDateTime, dataFimDateTime, projetoId, usuarioId, status);
+                dataInicioDateTime, dataFimDateTime, projetoId, adminOuUsuario(usuarioId, user), status);
 
         // Converter resultados para DTOs
         Map<String, Double> horasPorMes = new LinkedHashMap<>();
@@ -115,7 +118,7 @@ public class RelatorioService {
      * Busca atividades por status com base nos filtros informados
      */
     public List<AtividadePorStatusResponse> buscarAtividadesPorStatus(
-            LocalDate dataInicio, LocalDate dataFim, Long projetoId, Long usuarioId, String status) {
+            UserDetails user, LocalDate dataInicio, LocalDate dataFim, Long projetoId, Long usuarioId, String status) {
 
         // Definir datas padrão se não forem fornecidas
         if (dataInicio == null) {
@@ -127,7 +130,7 @@ public class RelatorioService {
 
         // Buscar dados do banco
         List<Object[]> resultados = atividadeRepository.contarAtividadesPorStatus(
-                dataInicio, dataFim, projetoId, usuarioId, status);
+                dataInicio, dataFim, projetoId, adminOuUsuario(usuarioId, user), status);
 
         // Converter resultados para DTOs
         List<AtividadePorStatusResponse> dtos = new ArrayList<>();
@@ -143,7 +146,7 @@ public class RelatorioService {
      * Busca top usuários por horas trabalhadas com base nos filtros informados
      */
     public List<TopUsuarioResponse> buscarTopUsuariosPorHoras(
-            LocalDate dataInicio, LocalDate dataFim, Long projetoId, Long usuarioId, String status) {
+            UserDetails user, LocalDate dataInicio, LocalDate dataFim, Long projetoId, Long usuarioId, String status) {
 
         // Definir datas padrão se não forem fornecidas
         if (dataInicio == null) {
@@ -159,7 +162,7 @@ public class RelatorioService {
 
         // Buscar dados do banco
         List<Object[]> resultados = lancamentoHoraRepository.buscarTopUsuariosPorHoras(
-                dataInicioDateTime, dataFimDateTime, projetoId, usuarioId, status, 10);
+                dataInicioDateTime, dataFimDateTime, projetoId, adminOuUsuario(usuarioId, user), status, 10);
 
         // Converter resultados para DTOs
         List<TopUsuarioResponse> dtos = new ArrayList<>();
@@ -172,5 +175,14 @@ public class RelatorioService {
         }
 
         return dtos;
+    }
+
+    public Long adminOuUsuario(Long usuarioId, UserDetails user) {
+        Usuario usuario = usuarioService.findByEmail(user.getUsername());
+
+        if (usuario.getPerfil().equals("ADMIN")) {
+            return usuarioId;
+        }
+        return usuario.getId();
     }
 }
