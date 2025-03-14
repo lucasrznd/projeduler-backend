@@ -43,6 +43,8 @@ spring.datasource.password=${MYSQL_PASSWORD}
 http://localhost:8080/swagger-ui.html
 ```
 
+- O arquivo localizado em ```src/main/resources/data.sql```contém o script de população do banco de dados. Nele, você pode visualizar os e-mails de acesso. A senha padrão para todos os usuários é **1234**.
+
 <h2 id="author">👨🏻‍💻 Autor</h2>
 
 <table>
