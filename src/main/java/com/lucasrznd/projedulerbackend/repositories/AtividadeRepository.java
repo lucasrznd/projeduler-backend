@@ -26,16 +26,16 @@ public interface AtividadeRepository extends JpaRepository<Atividade, Long> {
     @Query("SELECT COUNT(*) FROM Atividade a JOIN UsuarioAtividade ua ON a.id = ua.atividade.id WHERE a.status = :status AND ua.usuario.id = :usuarioId")
     Long countAllByStatusAndUsuarioId(String status, Long usuarioId);
 
-    @Query("SELECT COUNT(*) FROM Atividade a WHERE a.dataFim < NOW() AND a.status != 'CONCLUIDA'")
+    @Query("SELECT COUNT(*) FROM Atividade a WHERE a.dataFim < CURRENT_DATE AND a.status != 'CONCLUIDA'")
     Long countAllAtrasadas();
 
-    @Query("SELECT COUNT(*) FROM Atividade a INNER JOIN UsuarioAtividade ua ON a.id = ua.usuario.id WHERE a.dataFim < NOW() AND a.status != 'CONCLUIDA' AND ua.usuario.id = :usuarioId")
+    @Query("SELECT COUNT(*) FROM Atividade a INNER JOIN UsuarioAtividade ua ON a.id = ua.usuario.id WHERE a.dataFim < CURRENT_DATE AND a.status != 'CONCLUIDA' AND ua.usuario.id = :usuarioId")
     Long countAllAtrasadasByUsuarioId(Long usuarioId);
 
-    @Query("SELECT a FROM Atividade a WHERE a.dataFim < NOW() AND a.status != 'CONCLUIDA'")
+    @Query("SELECT a FROM Atividade a WHERE a.dataFim < CURRENT_DATE AND a.status != 'CONCLUIDA'")
     List<Atividade> findAllAtrasadas();
 
-    @Query("SELECT a FROM Atividade a INNER JOIN UsuarioAtividade ua ON a.id = ua.usuario.id WHERE a.dataFim < NOW() AND a.status != 'CONCLUIDA' AND ua.usuario.id = :usuarioId")
+    @Query("SELECT a FROM Atividade a INNER JOIN UsuarioAtividade ua ON a.id = ua.usuario.id WHERE a.dataFim < CURRENT_DATE AND a.status != 'CONCLUIDA' AND ua.usuario.id = :usuarioId")
     List<Atividade> findAllAtrasadasByUsuarioId(Long usuarioId);
 
     @Modifying

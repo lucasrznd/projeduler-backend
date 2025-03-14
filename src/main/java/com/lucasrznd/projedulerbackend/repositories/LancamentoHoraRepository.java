@@ -58,10 +58,11 @@ public interface LancamentoHoraRepository extends JpaRepository<LancamentoHora, 
             " AND lh.atividade.projeto.ativo = true")
     List<LancamentoHora> findLancamentosDiaAtual();
 
-    @Query("SELECT lh FROM LancamentoHora lh WHERE DATE(lh.dataRegistro) = CURRENT_DATE " +
+    @Query("SELECT lh FROM LancamentoHora lh WHERE DAY(lh.dataRegistro) = DAY(CURRENT_DATE) " +
+            "AND YEAR (lh.dataRegistro) = YEAR(CURRENT_DATE) AND MONTH(lh.dataRegistro) = MONTH(CURRENT_DATE )" +
             "AND lh.usuario.id = :usuarioId AND lh.usuario.ativo = true " +
             "AND lh.atividade.ativo = true AND lh.atividade.projeto.ativo = true")
-    List<LancamentoHora> findLancamentosDiaAtualByUsuarioId(Long usuarioId);
+    List<LancamentoHora> findLancamentosDiaAtualByUsuarioId(@Param("usuarioId") Long usuarioId);
 
     @Query(value = "SELECT p.id, p.nome, SUM(TIMESTAMPDIFF(SECOND, lh.data_inicio, lh.data_fim) / 3600.0) as total_horas " +
             "FROM tb_lancamento_hora lh " +
