@@ -40,6 +40,19 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.POST, "/usuarios").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.PUT, "/usuarios").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.DELETE, "/usuarios").hasRole("ADMIN")
+
+                        // Endpoints de projetos somente para ADMINS
+                        .requestMatchers(HttpMethod.POST, "/projetos").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.PUT, "/projetos").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.DELETE, "/projetos").hasRole("ADMIN")
+
+                        // Endpoints de atividades somente para ADMINS
+                        .requestMatchers(HttpMethod.POST, "/atividades").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.PUT, "/atividades").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.DELETE, "/atividades").hasRole("ADMIN")
+
+                        // Endpoints de lancamentos de horas somente para ADMINS
+                        .requestMatchers(HttpMethod.DELETE, "/lancamentos-horas").hasRole("ADMIN")
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(sess -> sess.sessionCreationPolicy(STATELESS))
