@@ -186,31 +186,31 @@ INSERT INTO tb_atividade (id, projeto_id, nome, descricao, data_inicio, data_fim
                           ativo) VALUE (26, 1, 'Onboarding de Novos Trainees', 'Introdução ao programa de trainee', '2025-02-21', '2025-02-25', 'EM ANDAMENTO', '2025-02-19 15:00:00', 1);
 INSERT INTO tb_atividade (id, projeto_id, nome, descricao, data_inicio, data_fim, status,
                           data_criacao,
-                          ativo) VALUE (27, 3, 'Protótipo UI Aplicativo', 'Criação do design do app mobile', '2025-02-23', '2025-02-28', 'PLANEJADO', '2025-02-21 09:00:00', 1);
+                          ativo) VALUE (27, 3, 'Protótipo UI Aplicativo', 'Criação do design do app mobile', '2025-02-23', '2025-02-28', 'ABERTA', '2025-02-21 09:00:00', 1);
 INSERT INTO tb_atividade (id, projeto_id, nome, descricao, data_inicio, data_fim, status,
                           data_criacao,
-                          ativo) VALUE (28, 4, 'Estratégia de Vendas E-commerce', 'Planejamento comercial do e-commerce', '2025-02-24', '2025-02-27', 'PLANEJADO', '2025-02-22 16:20:12', 1);
+                          ativo) VALUE (28, 4, 'Estratégia de Vendas E-commerce', 'Planejamento comercial do e-commerce', '2025-02-24', '2025-02-27', 'ABERTA', '2025-02-22 16:20:12', 1);
 INSERT INTO tb_atividade (id, projeto_id, nome, descricao, data_inicio, data_fim, status,
                           data_criacao,
-                          ativo) VALUE (29, 5, 'Dashboard de KPIs', 'Definição dos indicadores no dashboard', '2025-02-25', '2025-02-28', 'PLANEJADO', '2025-02-23 12:20:00', 1);
+                          ativo) VALUE (29, 5, 'Dashboard de KPIs', 'Definição dos indicadores no dashboard', '2025-02-25', '2025-02-28', 'ABERTA', '2025-02-23 12:20:00', 1);
 INSERT INTO tb_atividade (id, projeto_id, nome, descricao, data_inicio, data_fim, status,
                           data_criacao,
-                          ativo) VALUE (30, 6, 'Automação de Relatórios', 'Criação de scripts para automação', '2025-02-26', '2025-03-01', 'PLANEJADO', '2025-02-15 13:40:20', 1);
+                          ativo) VALUE (30, 6, 'Automação de Relatórios', 'Criação de scripts para automação', '2025-02-26', '2025-03-01', 'ABERTA', '2025-02-15 13:40:20', 1);
 INSERT INTO tb_atividade (id, projeto_id, nome, descricao, data_inicio, data_fim, status,
                           data_criacao,
-                          ativo) VALUE (31, 7, 'Treinamento IA Chatbot', 'Configuração inicial do chatbot', '2025-02-27', '2025-03-03', 'PLANEJADO', '2025-01-30 15:30:00', 1);
+                          ativo) VALUE (31, 7, 'Treinamento IA Chatbot', 'Configuração inicial do chatbot', '2025-02-27', '2025-03-03', 'ABERTA', '2025-01-30 15:30:00', 1);
 INSERT INTO tb_atividade (id, projeto_id, nome, descricao, data_inicio, data_fim, status,
                           data_criacao,
-                          ativo) VALUE (32, 8, 'Configuração de Contas Financeiras', 'Integração com APIs bancárias', '2025-02-28', '2025-03-04', 'PLANEJADO', '2025-02-25 08:00:00', 1);
+                          ativo) VALUE (32, 8, 'Configuração de Contas Financeiras', 'Integração com APIs bancárias', '2025-02-28', '2025-03-04', 'ABERTA', '2025-02-25 08:00:00', 1);
 INSERT INTO tb_atividade (id, projeto_id, nome, descricao, data_inicio, data_fim, status,
                           data_criacao,
-                          ativo) VALUE (33, 9, 'Monitoramento de Servidores','Definição de métricas para monitoramento', '2025-03-01', '2025-03-06','PLANEJADO', '2025-02-21 08:40:00', 1);
+                          ativo) VALUE (33, 9, 'Monitoramento de Servidores','Definição de métricas para monitoramento', '2025-03-01', '2025-03-06','ABERTA', '2025-02-21 08:40:00', 1);
 INSERT INTO tb_atividade (id, projeto_id, nome, descricao, data_inicio, data_fim, status,
                           data_criacao,
-                          ativo) VALUE (34, 9, 'Monitoramento de Servidores', 'Definição de métricas para monitoramento', '2025-03-01', '2025-03-06', 'PLANEJADO', '2025-02-27 12:45:21', 1);
+                          ativo) VALUE (34, 9, 'Monitoramento de Servidores', 'Definição de métricas para monitoramento', '2025-03-01', '2025-03-06', 'ABERTA', '2025-02-27 12:45:21', 1);
 INSERT INTO tb_atividade (id, projeto_id, nome, descricao, data_inicio, data_fim, status,
                           data_criacao,
-                          ativo) VALUE (35, 10, 'Implementação de Gamificação', 'Criação de sistema de pontos na plataforma EAD', '2025-03-02', '2025-03-07', 'PLANEJADO', '2025-03-01 09:00:00', 1);
+                          ativo) VALUE (35, 10, 'Implementação de Gamificação', 'Criação de sistema de pontos na plataforma EAD', '2025-03-02', '2025-03-07', 'ABERTA', '2025-03-01 09:00:00', 1);
 
 -- Inserindo relações entre usuários e atividades
 INSERT INTO tb_usuario_atividade (usuario_id, atividade_id, data_entrada, ativo) VALUE (6, 1, '2025-01-05 08:00:00', 1);
