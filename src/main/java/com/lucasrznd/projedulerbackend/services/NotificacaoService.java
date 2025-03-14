@@ -1,6 +1,5 @@
 package com.lucasrznd.projedulerbackend.services;
 
-import com.lucasrznd.projedulerbackend.dtos.request.NotificacaoRequest;
 import com.lucasrznd.projedulerbackend.dtos.response.NotificacaoResponse;
 import com.lucasrznd.projedulerbackend.exceptions.ResourceNotFoundException;
 import com.lucasrznd.projedulerbackend.mappers.NotificacaoMapper;
@@ -8,11 +7,14 @@ import com.lucasrznd.projedulerbackend.models.Notificacao;
 import com.lucasrznd.projedulerbackend.models.Usuario;
 import com.lucasrznd.projedulerbackend.repositories.NotificacaoRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Locale;
 
 @Service
 @RequiredArgsConstructor
@@ -21,9 +23,9 @@ public class NotificacaoService {
     private final NotificacaoRepository repository;
     private final NotificacaoMapper mapper;
     private final UsuarioService usuarioService;
+    private final MessageSource messageSource;
 
-    public void save(final NotificacaoRequest request) {
-        Notificacao notificacao = mapper.toModel(request);
+    public void save(final Notificacao notificacao) {
         notificacao.setDataCriacao(LocalDateTime.now());
         notificacao.setLida(false);
 
@@ -44,9 +46,12 @@ public class NotificacaoService {
     }
 
     public String criarMensagem(String projetoNome, String atividadeNome) {
+        Locale locale = LocaleContextHolder.getLocale();
         return !projetoNome.isEmpty()
-                ? "Você foi adicionado ao projeto: " + projetoNome
-                : "Você foi adicionado à atividade: " + atividadeNome;
+                ? messageSource.getMessage("notification.project.added",
+                new Object[]{projetoNome}, locale)
+                : messageSource.getMessage("notification.activity.added",
+                new Object[]{atividadeNome}, locale);
     }
 
     private Notificacao find(Long id) {
